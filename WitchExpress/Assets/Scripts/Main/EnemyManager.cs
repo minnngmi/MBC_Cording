@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        // 최초 몬스터 생성 시간
+        // 최초 적 생성 시간
         createEnemyTime = 3; 
 
         //오브젝트풀 리스트를 에너미를 담을 수 있는 크기의 배열로 만들어준다.

@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }   
 
+    // 폭발 이펙트를 작동시키는 메서드
     public  void ExplosionEnemy(Vector3 position)
     {
         //2.폭발 효과 공장에서 폭발 효과를 하나 만들어야 한다.

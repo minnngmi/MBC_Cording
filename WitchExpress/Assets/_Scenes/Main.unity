@@ -842,6 +842,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528984073}
   m_CullTransparentMesh: 1
+--- !u!1 &574445631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 574445633}
+  - component: {fileID: 574445632}
+  m_Layer: 0
+  m_Name: CandyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &574445632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574445631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba1bb2db4441c34c9017f802df09e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  candyFactory:
+  - {fileID: 2302432119399222922, guid: b5594bbc487be3647ace36ff78fd1b02, type: 3}
+  - {fileID: 1956159147656983278, guid: de8948f1e5ef9bf4ab9dada89ff0ca5d, type: 3}
+  poolSize: 5
+--- !u!4 &574445633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574445631}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655081497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1091,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.3339064, g: 0.24007654, b: 0.6132076, a: 1}
+  m_Color: {r: 0.53920674, g: 0.46635816, b: 0.754717, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -2172,3 +2220,4 @@ SceneRoots:
   - {fileID: 35954308}
   - {fileID: 1443907510}
   - {fileID: 1467613236}
+  - {fileID: 574445633}
