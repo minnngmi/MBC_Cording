@@ -39,6 +39,5 @@ public class PlayerMove : MonoBehaviour
            0,
            Mathf.Clamp(rb.position.z, zMin, zMax));
 
-
     }
 }

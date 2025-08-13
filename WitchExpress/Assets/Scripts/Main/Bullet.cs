@@ -27,6 +27,7 @@ public class Bullet : MonoBehaviour
             // 폭발 효과 메서드 호출
             enemy.ExplosionEnemy(transform.position);
 
+
             // ★ CandyManager 객체 얻어오기
             CandyManager candyManager =
                 GameObject.Find("CandyManager").GetComponent<CandyManager>();
@@ -35,7 +36,6 @@ public class Bullet : MonoBehaviour
             int candyCount = candyManager.candyFactory.Length;
             // 0 ~ (길이-1) 사이에서 랜덤한 정수 뽑기
             int candyPoolIndex = Random.Range(0, candyCount);
-
 
             // 캔디 생성 위치 = Enemy의 현재 위치
             Vector3 candySpawnPos = other.transform.position;

@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
+        // 적 이동
         // 0부터 9(10-1) 까지 값중에 하나를 랜덤으로 가져와서
         int randValue = Random.Range(0, 10);
 
@@ -33,6 +34,8 @@ public class Enemy : MonoBehaviour
             // 바라보는 방향을 플레이어 쪽으로 회전
             transform.LookAt(target.transform);
         }
+
+
     }
 
     void Update()

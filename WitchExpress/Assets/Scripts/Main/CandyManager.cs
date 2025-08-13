@@ -80,7 +80,7 @@ public class CandyManager : MonoBehaviour
         // 활성화해서 보이게 만들기
         candy.SetActive(true);
 
-        // 생성 / 재사용한 캔디를 반환
+        // 생성한 캔디를 반환
         return candy;
     }
 }
