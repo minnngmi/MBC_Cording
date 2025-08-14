@@ -32,6 +32,7 @@ public class EnemyManager : MonoBehaviour
 
         //오브젝트풀 리스트를 에너미를 담을 수 있는 크기의 배열로 만들어준다.
         enemyObjectPool = new List<GameObject>[enemyFactory.Length];
+        Debug.Log(gameObject.name);
 
         //오브젝트 풀에 넣을 에너미 개수 만큼 반복하여
         for (int i = 0; i < enemyFactory.Length; i++)

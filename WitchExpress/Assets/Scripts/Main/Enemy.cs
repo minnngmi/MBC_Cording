@@ -27,15 +27,13 @@ public class Enemy : MonoBehaviour
         int randValue = Random.Range(0, 10);
 
         // 만약 3보다 작으면 플레이어방향
-        if (randValue < 5)
+        if (randValue < 4)
         {
             // 플레이어를 태그로 찾아서 target으로 설정
             GameObject target = GameObject.FindWithTag("Player");
             // 바라보는 방향을 플레이어 쪽으로 회전
             transform.LookAt(target.transform);
         }
-
-
     }
 
     void Update()

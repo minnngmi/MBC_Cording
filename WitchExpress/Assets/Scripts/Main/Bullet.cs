@@ -21,27 +21,35 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            // 충돌한 오브젝트의 클래스 컴포넌트 가져오기(*중요)
+            // 1. 충돌한 오브젝트의 클래스 컴포넌트 가져오기(*중요)
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-            // 폭발 효과 메서드 호출
+            // 2. 폭발 효과 메서드 호출
             enemy.ExplosionEnemy(transform.position);
 
 
-            // ★ CandyManager 객체 얻어오기
+            // 3. Enemy 안에서 CandyManager 가져오기
+            //    -> Enemy 프리팹에 CandyManager를 붙였으니, 그대로 꺼내 씀
             CandyManager candyManager =
-                GameObject.Find("CandyManager").GetComponent<CandyManager>();
+                other.gameObject.GetComponent<CandyManager>();
 
+            // 4. 캔디 종류 개수
             // CandyManager 안의 candyFactory 배열 길이 확인
             int candyCount = candyManager.candyFactory.Length;
-            // 0 ~ (길이-1) 사이에서 랜덤한 정수 뽑기
-            int candyPoolIndex = Random.Range(0, candyCount);
 
-            // 캔디 생성 위치 = Enemy의 현재 위치
-            Vector3 candySpawnPos = other.transform.position;
+            // 5) 몇 개를 만들지 확률로 결정 (예: 40% 확률로 2개, 나머지는 1개)
+            int rand = Random.Range(0, 10);   // 0~9
+            int spawnCount = (rand < 4) ? 2 : 1;
 
-            // CandyManager에 위치와 인덱스를 전달해서 캔디 생성
-            GameObject newCandy = candyManager.CreatCandy(candyPoolIndex, candySpawnPos);
+            // 7) 정해진 개수만큼 생성
+            for (int i = 0; i < spawnCount; i++)
+            {
+                // 0 ~ (길이-1) 사이에서 랜덤한 정수 뽑기
+                int candyPoolIndex = Random.Range(0, candyCount);
+
+                // CandyManager에 위치와 인덱스를 전달해서 캔디 생성
+                GameObject newCandy = candyManager.CreatCandy(candyPoolIndex);
+            }
 
 
             // 맞은 상대 비활성화

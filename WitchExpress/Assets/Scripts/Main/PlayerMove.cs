@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public static float opening = 10;
+    public static float opening = 10; 
     public float speed;
+    
     // 배경 맵 사이즈
     public float xMin, xMax, zMin, zMax;
+
+    // 기울기 정도 (각도)
+    public float tiltAmountSide = 30f;   // 좌우 기울임
+    public float tiltAmountForward = 1f; // 앞뒤 기울임
+
 
     private Rigidbody rb;
 
@@ -15,7 +21,6 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
 
     private void Update()
     {
@@ -32,6 +37,17 @@ public class PlayerMove : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
         rb.velocity = movement * speed;
+
+        // 좌우 기울기 적용
+        float tiltZ = -moveHorizontal * tiltAmountSide;
+        // 앞뒤 기울기 적용
+        float tiltX = moveVertical * tiltAmountForward;
+
+        // Quaternion.Euler( X기울기, Y회전, Z기울기 )
+        Quaternion targetRotation = Quaternion.Euler(tiltX, 0, tiltZ);
+
+        // 부드럽게 회전 보간 (0.1f는 속도계수, 값이 클수록 빠르게 복귀)
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
 
         // 플레이어 이동범위 제한
         rb.position = new Vector3(
