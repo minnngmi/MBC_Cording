@@ -123,6 +123,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 455054595285555671}
     m_Modifications:
+    - target: {fileID: -8689706364908431267, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -191,9 +195,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f3cb5c0651535214eb452c2fe5ff8848, type: 2}
+    - target: {fileID: -782207623202608722, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -28968937232617636, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
       propertyPath: m_Name
       value: Enemy1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074669574446491207, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3654128565967061795, guid: 0805cba55f01e814397beaf19e974cec, type: 3}
       propertyPath: m_Materials.Array.data[0]

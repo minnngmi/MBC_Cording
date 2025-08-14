@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyIdx: 0
   scoreValue: 1
-  speed: 3
+  speed: 4
   explosionFactory: {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
 --- !u!114 &-4758664882334866635
 MonoBehaviour:
@@ -179,9 +179,49 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7677471772335586173, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -7029948723529949830, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -3166023543473803547, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -540094684847428609, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 359312179909449575, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
       propertyPath: m_Name
       value: Boo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291190919447392298, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649304590781711473, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148817236446094103, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9013638940889411661, guid: d8882681dc44ab34d9fb89a67211710f, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

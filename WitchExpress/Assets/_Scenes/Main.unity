@@ -1530,7 +1530,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1959
+    m_Bits: 4007
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1961,10 +1961,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f123c0d13e0fd143adf7270bf690e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  opening: 3
+  SecondStage: 3
   minTime: 0.2
   maxTime: 1
   enemyFactory:
   - {fileID: 5979284129805473566, guid: 1a06362a4a8786a4983cd17ccd03d94a, type: 3}
+  - {fileID: 5979284129805473566, guid: 097e8ec3e1d86b54285277e269dd4d8b, type: 3}
   poolSize: 10
   spawnValues: {x: 2.5, y: 0, z: 7}
 --- !u!1 &1469701338
@@ -2052,7 +2055,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1496998402}
   - component: {fileID: 1496998401}
-  - component: {fileID: 1496998400}
   m_Layer: 0
   m_Name: Background Camera
   m_TagString: Untagged
@@ -2060,14 +2062,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1496998400
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496998399}
-  m_Enabled: 1
 --- !u!20 &1496998401
 Camera:
   m_ObjectHideFlags: 0

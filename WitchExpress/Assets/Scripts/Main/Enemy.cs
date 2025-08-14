@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
     {
         //2.폭발 효과 공장에서 폭발 효과를 하나 만들어야 한다.
         GameObject explosion = Instantiate(explosionFactory);
+
         //3.폭발 효과를 발생(위치) 시키고 싶다.
         explosion.transform.position = position;
     }
