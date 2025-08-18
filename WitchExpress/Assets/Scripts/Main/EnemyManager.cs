@@ -67,13 +67,13 @@ public class EnemyManager : MonoBehaviour
         while (true)
         {
             // --- 40초 동안 첫 번째 몬스터만 스폰하는 구간 ---
-            // 1분 타이머
+            // 시간 타이머
             float patternChangeTimer = 0f;
 
             // 현재 스폰할 적의 인덱스 (enemyFactory의 순서)
             int currentEnemyIndex = 0;
 
-            while (patternChangeTimer < 40f)
+            while (patternChangeTimer < 10f)     // 40
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
                 float spawnInterval = UnityEngine.Random.Range(minTime, maxTime);
@@ -89,11 +89,11 @@ public class EnemyManager : MonoBehaviour
             Debug.Log($"{currentEnemyIndex + 1}번째 몬스터 패턴으로 변경되었습니다.");
 
 
-            // --- 3초 대기 후, 1분 동안 첫 번째, 두 번째 몬스터가 섞여서 스폰되는 구간 ---
+            // --- 3초 대기 후, 40초 동안 첫 번째, 두 번째 몬스터가 섞여서 스폰되는 구간 ---
             yield return new WaitForSeconds(SecondStage);
             patternChangeTimer = 0f;
 
-            // 1분(40초) 동안 현재 인덱스에 해당하는 적을 계속 스폰
+            // 40초 동안 현재 인덱스에 해당하는 적을 계속 스폰
             while (patternChangeTimer < 40f)
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
@@ -113,7 +113,7 @@ public class EnemyManager : MonoBehaviour
 
                     if (randomChance < 2f)
                     {
-                        // 30% 확률로 2번째 몬스터 스폰 (인덱스 1)
+                        // 20% 확률로 2번째 몬스터 스폰 (인덱스 1)
                         enemyNum = 1;
                     }
                     else
