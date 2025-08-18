@@ -21,36 +21,17 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            // 1. 충돌한 오브젝트의 클래스 컴포넌트 가져오기(*중요)
+            // 1. 충돌한 오브젝트의 클래스 컴포넌트 가져오기
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-            // 2. 폭발 효과 메서드 호출
+            // 2. 폭발 효과 메서드 호출 (Enemy가 처리)
             enemy.ExplosionEnemy(transform.position);
 
+            // 3. Enemy의 CandyManager를 가져와서 캔디 생성 메서드 호출
+            CandyManager candyManager = other.gameObject.GetComponent<CandyManager>();
 
-            // 3. Enemy 안에서 CandyManager 가져오기
-            //    -> Enemy 프리팹에 CandyManager를 붙였으니, 그대로 꺼내 씀
-            CandyManager candyManager =
-                other.gameObject.GetComponent<CandyManager>();
-
-            // 4. 캔디 종류 개수
-            // CandyManager 안의 candyFactory 배열 길이 확인
-            int candyCount = candyManager.candyFactory.Length;
-
-            // 5) 몇 개를 만들지 확률로 결정 (예: 40% 확률로 2개, 나머지는 1개)
-            int rand = Random.Range(0, 10);   // 0~9
-            int spawnCount = (rand < 4) ? 2 : 1;
-
-            // 7) 정해진 개수만큼 생성
-            for (int i = 0; i < spawnCount; i++)
-            {
-                // 0 ~ (길이-1) 사이에서 랜덤한 정수 뽑기
-                int candyPoolIndex = Random.Range(0, candyCount);
-
-                // CandyManager에 위치와 인덱스를 전달해서 캔디 생성
-                GameObject newCandy = candyManager.CreatCandy(candyPoolIndex);
-            }
-
+            // **캔디 생성에 관련된 모든 로직을 CandyManager에 맡깁니다.**
+            candyManager.SpawnRandomCandy();
 
             // 맞은 상대 비활성화
             other.gameObject.SetActive(false);
@@ -64,6 +45,7 @@ public class Bullet : MonoBehaviour
             // 해당 적 오브젝트 풀 리스트에 추가
             em.enemyObjectPool[enemyIdx].Add(other.gameObject);
         }
+
          // 자신(총알)도 비활성화
         gameObject.SetActive(false);
         // PlayerFire 객체 얻어오기

@@ -94,7 +94,7 @@ public class EnemyManager : MonoBehaviour
             patternChangeTimer = 0f;
 
             // 40초 동안 현재 인덱스에 해당하는 적을 계속 스폰
-            while (patternChangeTimer < 40f)
+            while (patternChangeTimer < 20f)
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
                 float spawnInterval = UnityEngine.Random.Range(minTime, maxTime);
