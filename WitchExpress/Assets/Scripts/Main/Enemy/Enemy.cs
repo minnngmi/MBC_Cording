@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     //폭발(효과) 공장 주소
     public GameObject explosionFactory;
 
+
     private void OnEnable()
     {
         // 적 이동
@@ -32,7 +34,10 @@ public class Enemy : MonoBehaviour
             // 플레이어를 태그로 찾아서 target으로 설정
             GameObject target = GameObject.FindWithTag("Player");
             // 바라보는 방향을 플레이어 쪽으로 회전
-            transform.LookAt(target.transform);
+            if (target != null)
+            {
+                transform.LookAt(target.transform);
+            }
         }
     }
 
@@ -41,6 +46,7 @@ public class Enemy : MonoBehaviour
         //transform.position += dir * speed * Time.deltaTime;
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }   
+
 
     // 폭발 이펙트를 작동시키는 메서드
     public  void ExplosionEnemy(Vector3 position)

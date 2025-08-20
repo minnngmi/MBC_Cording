@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightingMove : MonoBehaviour
+public class LightningMove : MonoBehaviour
 {
     // 이 스크립트는 번개를 앞으로 이동시킵니다.
 
     // 번개가 이동하는 속도
-    public float moveSpeed = 10f;
+    public float moveSpeed;
 
     private void Update()
     {

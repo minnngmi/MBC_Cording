@@ -11,10 +11,10 @@ public class EnemyBooMove : MonoBehaviour
     public GameObject lightningPrefab;
 
     // ⭐ 추가: 오브젝트 풀의 크기를 인스펙터에서 설정할 수 있게 합니다.
-    public int poolSize = 9;
+    public int poolSize;
 
     // ⭐ 수정: 오브젝트 풀을 관리할 리스트
-    private List<GameObject> lightningPool;
+    public List<GameObject> lightningPool;
 
     // ⭐ 추가: 번개를 몇 초마다 발사할지 설정합니다.
     public float fireInterval = 1.0f;
@@ -25,6 +25,8 @@ public class EnemyBooMove : MonoBehaviour
     // 번개 공격이 시작될 때까지 기다릴 시간 (2초)
     public float attackDelay;
     public float fireDelay;
+
+
 
     private void Awake()
     {
@@ -39,22 +41,23 @@ public class EnemyBooMove : MonoBehaviour
         }
     }
 
+
     private void OnEnable()
     {
-        // ⭐ 수정: 몬스터가 활성화될 때 이펙트를 즉시 비활성화합니다.
+        // 몬스터가 활성화될 때 이펙트를 즉시 비활성화합니다.
         if (lightningEffect != null)
         {
             lightningEffect.SetActive(false);
         }
 
-        // ⭐ 오브젝트가 활성화될 때마다 호출됩니다.
+        // 오브젝트가 활성화될 때마다 호출됩니다.
         // 몬스터가 풀링으로 다시 활성화될 때, 번개 발사 코루틴을 다시 시작합니다.
         StartCoroutine(AttackCoroutine());
     }
 
     private void OnDisable()
     {
-        // ⭐ 오브젝트가 비활성화될 때 호출됩니다.
+        // 오브젝트가 비활성화될 때 호출됩니다.
         // 몬스터가 사라질 때 번개 발사 코루틴을 중지하여 불필요한 작업이 발생하지 않게 합니다.
         StopAllCoroutines();
     }

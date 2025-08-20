@@ -25,17 +25,28 @@ public class Bullet : MonoBehaviour
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
             // 2. 폭발 효과 메서드 호출 (Enemy가 처리)
-            enemy.ExplosionEnemy(transform.position);
+            if (enemy != null)
+            {
+                enemy.ExplosionEnemy(transform.position); // 이 안에서 비활성화가 일어납니다.
+            }
+
+            // GameManager를 통해 적 처치 카운트를 증가시킵니다.
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.IncreaseEnemyKills();
+            }
 
             // 3. Enemy의 CandyManager를 가져와서 캔디 생성 메서드 호출
             CandyManager candyManager = other.gameObject.GetComponent<CandyManager>();
-
-            // **캔디 생성에 관련된 모든 로직을 CandyManager에 맡깁니다.**
-            candyManager.SpawnRandomCandy();
+            if (candyManager != null)
+            {
+                candyManager.SpawnRandomCandy();
+            }
 
             // 맞은 상대 비활성화
             other.gameObject.SetActive(false);
 
+            
             // EnemyManager 객체 얻어오기
             EnemyManager em =
                 GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
@@ -44,6 +55,8 @@ public class Bullet : MonoBehaviour
             int enemyIdx = enemy.enemyIdx;
             // 해당 적 오브젝트 풀 리스트에 추가
             em.enemyObjectPool[enemyIdx].Add(other.gameObject);
+            
+
         }
 
          // 자신(총알)도 비활성화
