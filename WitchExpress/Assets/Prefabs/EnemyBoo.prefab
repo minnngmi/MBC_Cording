@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 455054595285555671}
   - component: {fileID: 6224924148246820157}
   - component: {fileID: 2431611328792251743}
-  - component: {fileID: -4758664882334866635}
   - component: {fileID: 5257416905164176109}
   - component: {fileID: -1669371045538153077}
+  - component: {fileID: -4758664882334866635}
   m_Layer: 9
   m_Name: EnemyBoo
   m_TagString: Enemy
@@ -118,21 +118,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.38
   m_Center: {x: 0, y: 0.35, z: -0.31}
---- !u!114 &-4758664882334866635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979284129805473566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba1bb2db4441c34c9017f802df09e3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  candyFactory:
-  - {fileID: 2302432119399222922, guid: bf8bf8e877cbf024caffd7cda08eeb6f, type: 3}
-  - {fileID: 2302432119399222922, guid: 5b06a8ffb2b1bd44ab03fb182bfa0801, type: 3}
 --- !u!114 &5257416905164176109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +152,22 @@ MonoBehaviour:
   lightningEffect: {fileID: 5822436232809456948}
   firePoint: {fileID: 7262974390590293331}
   attackDelay: 1
-  fireDelay: 0.5
+  fireDelay: 1
+--- !u!114 &-4758664882334866635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979284129805473566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba1bb2db4441c34c9017f802df09e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  candyFactory:
+  - {fileID: 2302432119399222922, guid: bf8bf8e877cbf024caffd7cda08eeb6f, type: 3}
+  - {fileID: 2302432119399222922, guid: 5b06a8ffb2b1bd44ab03fb182bfa0801, type: 3}
 --- !u!1001 &783313286971265205
 PrefabInstance:
   m_ObjectHideFlags: 0

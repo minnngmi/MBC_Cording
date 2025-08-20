@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6993750283413869384}
   - component: {fileID: 6133487112955065943}
   - component: {fileID: 9214236670138301504}
+  - component: {fileID: -3951007044881327833}
   m_Layer: 0
   m_Name: BooLighting
   m_TagString: Untagged
@@ -69,7 +70,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4525c459f2235d48baa300213360ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
+--- !u!114 &-3951007044881327833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313956937570624664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 145e0bdc7b58bf8408e58d3e40c7e745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5571040331043300571
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,9 @@ public class PlayerCollect : MonoBehaviour
             GameObject parentObj = other.transform.parent.gameObject;
             // 부모 삭제 → 자식도 같이 삭제
             Destroy(parentObj);
+
+            // GameManager를 사용하여 사탕 카운트를 증가시킵니다.
+            GameManager.Instance.IncreaseCandyCount();
         }
     }
-
 }

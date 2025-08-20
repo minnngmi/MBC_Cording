@@ -8,9 +8,9 @@ public class EnemyManager : MonoBehaviour
     public float opening; // 3f
     public float SecondStage = 3f;
 
-    // 최소시간
+    // 적 스폰 최소시간
     public float minTime;
-    // 최대시간
+    // 적 스폰 최대시간
     public float maxTime;
 
     // 적 공장
