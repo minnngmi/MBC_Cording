@@ -22,7 +22,7 @@ public class LightningAttack : MonoBehaviour
             // PlayerHP 컴포넌트가 있다면 데미지를 전달합니다.
             if (playerHP != null)
             {
-                playerHP.TakeDamage(damage);
+                playerHP.TakeDamage(damage); // PlayerHP 스크립트의 메서드
             }
         // 충돌 후 총알을 비활성화하여 오브젝트 풀로 돌려보냅니다.
         gameObject.SetActive(false);

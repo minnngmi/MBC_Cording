@@ -93,7 +93,7 @@ public class EnemyBooMove : MonoBehaviour
     void FireLightningBolts()
     {
         // 번개를 발사할 각도들을 배열로 만듭니다.
-        float[] angles = { -30f, 0f, 30f };
+        float[] angles = { -20f, 0f, 20f };
         int boltsToFire = 3;
 
         for (int i = 0; i < boltsToFire; i++)

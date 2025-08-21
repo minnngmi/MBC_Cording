@@ -8,16 +8,25 @@ public class PlayerFire : MonoBehaviour
     public GameObject bulletFactory;
 
     //(오브젝트풀) 탄창에 넣을 총알 개수
-    public int poolSize; 
-    
+    public int poolSize;
+
     //오브젝트 풀 리스트 생성
     public List<GameObject> bulletObjectPool;
-    
+
     //총구 위치
     public GameObject firePosition;
 
     // 공격 모션
-    public Animator witchAttack; 
+    public Animator witchAttack;
+
+
+    // 스킬 동영상 재생을 위한 변수 추가 (예시)
+    public GameObject skillVideo;
+    // public GameObject skillEffect;
+
+    //  스킬 사용 가능 상태를 추적하는 변수
+    private bool canUseSkill = false;
+
 
     private void Start()
     {
@@ -38,11 +47,18 @@ public class PlayerFire : MonoBehaviour
             // 오브젝트 비활성화 시킨다.
             bullet.SetActive(false);
         }
+
+        // GameManager의 OnSkillActivated 이벤트 구독
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnSkillActivated += OnSkillReady;
+        }
     }
 
     void Update()
     {
-        //목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.
+        // 일반 공격 로직
+        // 목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.
         // - 만약 사용자가 ctrl 버튼을 누르면
         if (Input.GetButtonDown("Fire1"))
         {
@@ -51,7 +67,7 @@ public class PlayerFire : MonoBehaviour
             {
                 //비활성화 된(발사되지 않은) 첫번째 총알을
                 GameObject bullet = bulletObjectPool[0];
-                
+
                 //총알을 활성화시킨다(발사시킨다)
                 bullet.SetActive(true);
 
@@ -65,5 +81,49 @@ public class PlayerFire : MonoBehaviour
                 bulletObjectPool.RemoveAt(0);
             }
         }
+
+        // 스킬 사용 로직을 별도 메서드로 관리
+        CheckForSkillInput();
+    }
+
+
+    // 스킬 사용 가능 상태 이벤트 수신시,  호출되는 메서드
+    // (1) 스킬 사용 가능 상태로 변경
+
+    private void OnSkillReady()
+    {
+        canUseSkill = true; // 스킬 사용 가능 상태로 변경
+        Debug.Log("PlayerFire: Skill is ready!");
+    }
+
+    //  (2) 스킬 사용 입력을 감지
+    private void CheckForSkillInput()
+    {
+        // 스킬 사용이 가능하고 Space 키를 누르면
+        if (canUseSkill && Input.GetKeyDown(KeyCode.Space))
+        {
+            UseSkill();
+        }
+    }
+
+    // (3) 스킬 사용
+    private void UseSkill()
+    {
+        // 스킬 사용 로직을 여기에 구현
+        Debug.Log("PlayerFire: Special Skill Activated!");
+
+        // GameManager를 통해 MP를 80 감소시킵니다.
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.DecreasePlayerMP(80);
+        }
+
+        // 스킬 사용 후 상태를 비활성화로 변경
+        canUseSkill = false;
+
+        // 여기에 특별 공격 로직(예: 특수 총알 발사, 이펙트)이나 동영상 재생 로직을 추가
+        // 예시: skillVideo.SetActive(true);
+        // 예시: skillEffect.Play();
+
     }
 }
