@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     // 고유번호
     public int enemyIdx;
 
+    // 플레이어에게 줄 데미지
+    public int damage;
+
     // 처치시 획득 점수
     public int scoreValue;
 
@@ -45,11 +48,11 @@ public class Enemy : MonoBehaviour
     {
         //transform.position += dir * speed * Time.deltaTime;
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }   
+    }
 
 
     // 폭발 이펙트를 작동시키는 메서드
-    public  void ExplosionEnemy(Vector3 position)
+    public void ExplosionEnemy(Vector3 position)
     {
         //2.폭발 효과 공장에서 폭발 효과를 하나 만들어야 한다.
         GameObject explosion = Instantiate(explosionFactory);
@@ -57,4 +60,24 @@ public class Enemy : MonoBehaviour
         //3.폭발 효과를 발생(위치) 시키고 싶다.
         explosion.transform.position = position;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 충돌한 오브젝트가 "Player" 태그를 가지고 있는지 확인합니다.
+        if (other.CompareTag("Player"))
+        {
+            // Player 오브젝트에서 PlayerHP 컴포넌트를 찾아옵니다.
+            PlayerHP playerHP = other.GetComponent<PlayerHP>();
+
+            // PlayerHP 컴포넌트가 있다면 데미지를 전달합니다.
+            if (playerHP != null)
+            {
+                playerHP.TakeDamage(damage); // PlayerHP 스크립트의 메서드
+            }
+
+
+        }
+    }
 }
+
+

@@ -24,6 +24,17 @@ public class GameManager : MonoBehaviour
     public Action<int> OnMPChanged; //  2) MP 변경 이벤트
     public Action OnSkillActivated; // 3) 스킬 사용 이벤트
 
+    // 게임 상태 상수
+    public enum GameState
+    {
+        Ready,
+        Run,
+        GameOver
+    }
+
+    // 현재의 게임 상태 변수
+    public GameState gState;
+
 
     // 3. Awake 메서드: 로드될 때 가장 먼저 실행
     private void Awake()
@@ -42,6 +53,12 @@ public class GameManager : MonoBehaviour
             // 인스턴스가 이미 있다면, 새로 생성된 오브젝트를 파괴하여 중복막기
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        // 초기 게임 상태
+        gState = GameState.Run;
     }
 
     // 4. 데이터를 변경하는 메서드들 모음

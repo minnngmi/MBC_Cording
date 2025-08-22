@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video; // 비디오 재생을 위해 필요한 라이브러리 추가
 
 public class PlayerFire : MonoBehaviour
 {
@@ -19,18 +20,22 @@ public class PlayerFire : MonoBehaviour
     // 공격 모션
     public Animator witchAttack;
 
+    // 스킬에 필요한 새로운 변수들
+    public VideoPlayer skillVideoPlayer; // 동영상 재생을 위한 VideoPlayer 컴포넌트
+    public GameObject skillEffectObject; // 플레이어의 자식인 SkillEffect 오브젝트를 참조할 변수 
 
-    // 스킬 동영상 재생을 위한 변수 추가 (예시)
-    public GameObject skillVideo;
-    // public GameObject skillEffect;
 
-    //  스킬 사용 가능 상태를 추적하는 변수
+    // 스킬 사용 가능 상태를 추적하는 변수
     private bool canUseSkill = false;
+    // 코루틴 변수로 스킬 실행 상태 추적
+    private Coroutine skillCoroutine;
+    // 동영상 재생 여부를 추적하는 변수
+    private bool hasPlayedSkillVideo = false;
 
 
     private void Start()
     {
-
+        skillEffectObject.SetActive(false);
         // 오브젝트 풀 리스트로 관리
         //탄창의 크기를 총알을 담을 수 있는 크기로 만들어준다.
         bulletObjectPool = new List<GameObject>();
@@ -53,39 +58,47 @@ public class PlayerFire : MonoBehaviour
         {
             GameManager.Instance.OnSkillActivated += OnSkillReady;
         }
+
+        // 동영상이 끝났을 때를 감지하는 이벤트에 연결
+        if (skillVideoPlayer != null)
+        {
+            skillVideoPlayer.loopPointReached += OnSkillVideoFinished;
+        }
     }
 
     void Update()
     {
-        // 일반 공격 로직
-        // 목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.
-        // - 만약 사용자가 ctrl 버튼을 누르면
-        if (Input.GetButtonDown("Fire1"))
+        // 스킬 코루틴이 실행 중이 아닐 때만 일반 공격과 스킬 입력을 받음
+        if (skillCoroutine == null)
         {
-            //탄창 안에 있는 총알들 중에서
-            if (bulletObjectPool.Count > 0)
+            // 일반 공격 로직
+            // 목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.
+            // - 만약 사용자가 ctrl 버튼을 누르면
+            if (Input.GetButtonDown("Fire1"))
             {
-                //비활성화 된(발사되지 않은) 첫번째 총알을
-                GameObject bullet = bulletObjectPool[0];
+                //탄창 안에 있는 총알들 중에서
+                if (bulletObjectPool.Count > 0)
+                {
+                    //비활성화 된(발사되지 않은) 첫번째 총알을
+                    GameObject bullet = bulletObjectPool[0];
 
-                //총알을 활성화시킨다(발사시킨다)
-                bullet.SetActive(true);
+                    //총알을 활성화시킨다(발사시킨다)
+                    bullet.SetActive(true);
 
-                //총알을 총구위치로 가져다 놓기
-                bullet.transform.position = firePosition.transform.position;
+                    //총알을 총구위치로 가져다 놓기
+                    bullet.transform.position = firePosition.transform.position;
 
-                // 공격 모션 작동
-                witchAttack.SetTrigger("attack");
+                    // 공격 모션 작동
+                    witchAttack.SetTrigger("attack");
 
-                //오브젝트풀에서 총알 제거
-                bulletObjectPool.RemoveAt(0);
+                    //오브젝트풀에서 총알 제거
+                    bulletObjectPool.RemoveAt(0);
+                }
             }
+            // 스킬 사용 로직을 별도 메서드로 관리
+            CheckForSkillInput();
         }
-
-        // 스킬 사용 로직을 별도 메서드로 관리
-        CheckForSkillInput();
     }
-
 
     // 스킬 사용 가능 상태 이벤트 수신시,  호출되는 메서드
     // (1) 스킬 사용 가능 상태로 변경
@@ -102,28 +115,71 @@ public class PlayerFire : MonoBehaviour
         // 스킬 사용이 가능하고 Space 키를 누르면
         if (canUseSkill && Input.GetKeyDown(KeyCode.Space))
         {
-            UseSkill();
+            // 스킬 동작을 처리하는 코루틴 시작
+            skillCoroutine = StartCoroutine(SkillSequence());
         }
     }
 
-    // (3) 스킬 사용
-    private void UseSkill()
+    // 특수 스킬 발동 코루틴
+    private IEnumerator SkillSequence()
     {
-        // 스킬 사용 로직을 여기에 구현
+        canUseSkill = false;
+
         Debug.Log("PlayerFire: Special Skill Activated!");
 
-        // GameManager를 통해 MP를 80 감소시킵니다.
         if (GameManager.Instance != null)
         {
             GameManager.Instance.DecreasePlayerMP(80);
         }
 
-        // 스킬 사용 후 상태를 비활성화로 변경
-        canUseSkill = false;
+        // 동영상이 아직 재생되지 않았을 경우에만 동영상 재생
+        if (!hasPlayedSkillVideo)
+        {
+            if (skillVideoPlayer != null)
+            {
+                skillVideoPlayer.gameObject.SetActive(true);
+                skillVideoPlayer.Play();
+                Debug.Log("스킬 동영상 재생 시작!");
+                hasPlayedSkillVideo = true;
+            }
+            // 동영상 재생이 끝날 때까지 기다림
+            yield return new WaitUntil(() => !skillVideoPlayer.isPlaying);
+        }
+        
+        // 동영상 종료 후 또는 이미 재생된 경우 특수 공격 실행
+        if (skillEffectObject != null)
+        {
+            skillEffectObject.SetActive(true);
+            Debug.Log("특수 공격 활성화!");
+        }
+        
+        // 30초 동안 스킬이 지속되도록 기다림
+        yield return new WaitForSeconds(20f);
+        
+        Debug.Log("스킬 지속 시간 종료!");
 
-        // 여기에 특별 공격 로직(예: 특수 총알 발사, 이펙트)이나 동영상 재생 로직을 추가
-        // 예시: skillVideo.SetActive(true);
-        // 예시: skillEffect.Play();
-
+        // 코루틴 종료 시 특수 공격을 비활성화
+        if (skillEffectObject != null)
+        {
+            skillEffectObject.SetActive(false);
+            Debug.Log("특수 공격 비활성화!");
+        }
+        // 코루틴 종료를 나타냄
+        skillCoroutine = null;
     }
+
+    private void OnSkillVideoFinished(VideoPlayer vp)
+    {
+        Debug.Log("스킬 동영상 재생 종료!");
+
+        if (skillVideoPlayer != null)
+        {
+            skillVideoPlayer.gameObject.SetActive(false);
+        }
+    }
+
+
+
+
+
 }
