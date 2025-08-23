@@ -22,16 +22,20 @@ public class PlayerFire : MonoBehaviour
 
     // 스킬에 필요한 새로운 변수들
     public VideoPlayer skillVideoPlayer; // 동영상 재생을 위한 VideoPlayer 컴포넌트
+    public GameObject skillVideoUIObject;  // Raw Image를 담고 있는 UI 오브젝트 변수
     public GameObject skillEffectObject; // 플레이어의 자식인 SkillEffect 오브젝트를 참조할 변수 
 
 
     // 스킬 사용 가능 상태를 추적하는 변수
     private bool canUseSkill = false;
-    // 코루틴 변수로 스킬 실행 상태 추적
+    // 스킬 실행 상태 추적하는 코루틴 변수
     private Coroutine skillCoroutine;
+
     // 동영상 재생 여부를 추적하는 변수
     private bool hasPlayedSkillVideo = false;
 
+    // PauseManager 스크립트와 연결하기 위한 변수
+    private PauseManager pauseManager;
 
     private void Start()
     {
@@ -59,6 +63,10 @@ public class PlayerFire : MonoBehaviour
             GameManager.Instance.OnSkillActivated += OnSkillReady;
         }
 
+        // 씬에서 PauseManager 스크립트를 찾아 연결
+        pauseManager = FindObjectOfType<PauseManager>();
+        skillVideoUIObject.SetActive(false);
+
         // 동영상이 끝났을 때를 감지하는 이벤트에 연결
         if (skillVideoPlayer != null)
         {
@@ -68,6 +76,12 @@ public class PlayerFire : MonoBehaviour
 
     void Update()
     {
+        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
+        if (GameManager.Instance.gState != GameManager.GameState.Run)
+        {
+            return;
+        }
+
         // 스킬 코루틴이 실행 중이 아닐 때만 일반 공격과 스킬 입력을 받음
         if (skillCoroutine == null)
         {
@@ -137,13 +151,19 @@ public class PlayerFire : MonoBehaviour
         {
             if (skillVideoPlayer != null)
             {
-                skillVideoPlayer.gameObject.SetActive(true);
+                skillVideoUIObject.SetActive(true);
                 skillVideoPlayer.Play();
                 Debug.Log("스킬 동영상 재생 시작!");
+
+                // 동영상 재생 시작과 동시에 게임 일시정지!
+                // PauseManager 스크립트의 PauseGame() 메서드를 호출
+                if (pauseManager != null)
+                {
+                    pauseManager.PauseGame();
+                }
+
                 hasPlayedSkillVideo = true;
             }
-            // 동영상 재생이 끝날 때까지 기다림
-            yield return new WaitUntil(() => !skillVideoPlayer.isPlaying);
         }
         
         // 동영상 종료 후 또는 이미 재생된 경우 특수 공격 실행
@@ -153,7 +173,7 @@ public class PlayerFire : MonoBehaviour
             Debug.Log("특수 공격 활성화!");
         }
         
-        // 30초 동안 스킬이 지속되도록 기다림
+        // 20초 동안 스킬이 지속되도록 기다림
         yield return new WaitForSeconds(20f);
         
         Debug.Log("스킬 지속 시간 종료!");
@@ -174,12 +194,14 @@ public class PlayerFire : MonoBehaviour
 
         if (skillVideoPlayer != null)
         {
-            skillVideoPlayer.gameObject.SetActive(false);
+            skillVideoUIObject.SetActive(false);
+        }
+
+        // 동영상 재생이 끝나면 게임을 다시 시작합니다.
+        // PauseManager 스크립트의 ResumeGame() 메서드를 호출합니다.
+        if (pauseManager != null)
+        {
+            pauseManager.ResumeGame();
         }
     }
-
-
-
-
-
 }

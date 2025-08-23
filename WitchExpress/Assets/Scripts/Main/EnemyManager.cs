@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    // 게임 시작 후 첫 몬스터가 나오기까지의 시간 (인스펙터에서 조절 가능)
-    public float opening; // 3f
-    public float SecondStage = 3f;
+    // 몬스터 등장 시간
+    public float stageTime;
+    // 2탄 몬스터가 나오기까지의 대기시간 
+    public float secondStage = 5f;
 
     // 적 스폰 최소시간
     public float minTime;
@@ -26,12 +27,17 @@ public class EnemyManager : MonoBehaviour
     public Vector3 spawnValues;
 
 
+    private void Update()
+    {
+        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
+        if (GameManager.Instance.gState != GameManager.GameState.Run)
+        {
+            return;
+        }
+    }
 
     private void Start()
     {
-        // 최초 적 생성 시간
-        //createEnemyTime = 3; 
-
         //오브젝트풀 리스트를 에너미를 담을 수 있는 크기의 배열로 만들어준다.
         enemyObjectPool = new List<GameObject>[enemyFactory.Length];
 
@@ -56,24 +62,31 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(SpawnEnemiesRoutine());
     }
 
+
     // 코루틴: 1분마다 몬스터 스폰 패턴을 변경하며 적을 스폰합니다.
     IEnumerator SpawnEnemiesRoutine()
     {
-        // 게임 시작 후 지정된 시간(opening)만큼 기다립니다.
-        yield return new WaitForSeconds(opening);
-
 
         // 무한 반복 루프: 게임 내내 패턴을 반복합니다.
         while (true)
         {
-            // --- 40초 동안 첫 번째 몬스터만 스폰하는 구간 ---
+            // 게임 상태가 'Run'이 아닐 경우, 다음 프레임을 기다립니다.
+            // 게임 상태가 'Run'이 될 때까지 이 루프를 계속 반복합니다.
+            while (GameManager.Instance.gState != GameManager.GameState.Run)
+            {
+                yield return null;
+            }
+
+            Debug.Log($"몬스터가 등장합니다.");
+
+            // --- 첫 번째 몬스터만 스폰하는 구간 ---
             // 시간 타이머
             float patternChangeTimer = 0f;
 
             // 현재 스폰할 적의 인덱스 (enemyFactory의 순서)
             int currentEnemyIndex = 0;
 
-            while (patternChangeTimer < 40f)     // 40
+            while (patternChangeTimer < stageTime)     
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
                 float spawnInterval = UnityEngine.Random.Range(minTime, maxTime);
@@ -88,13 +101,19 @@ public class EnemyManager : MonoBehaviour
 
             Debug.Log($"{currentEnemyIndex + 1}번째 몬스터 패턴으로 변경되었습니다.");
 
+            // 게임 상태를 확인
+            if (GameManager.Instance.gState != GameManager.GameState.Run)
+            {
+                // break를 사용해 최상위 while(true) 루프로 돌아갑니다.
+                break;
+            }
 
             // --- 3초 대기 후, 40초 동안 첫 번째, 두 번째 몬스터가 섞여서 스폰되는 구간 ---
-            yield return new WaitForSeconds(SecondStage);
+            yield return new WaitForSeconds(secondStage);
             patternChangeTimer = 0f;
 
             // 40초 동안 현재 인덱스에 해당하는 적을 계속 스폰
-            while (patternChangeTimer < 40f)
+            while (patternChangeTimer < stageTime)
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
                 float spawnInterval = UnityEngine.Random.Range(minTime, maxTime);

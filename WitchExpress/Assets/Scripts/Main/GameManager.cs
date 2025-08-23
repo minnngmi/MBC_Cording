@@ -7,7 +7,7 @@ using System;  // Action 사용을 위해
 
 public class GameManager : MonoBehaviour
 {
-    // 1. 싱글톤 인스턴스: static 변수로 자기 자신을 담을 그릇을 만듭니다.
+    // 1. 싱글톤 변수: static 변수로 자기 자신을 담을 그릇을 만듭니다.
     public static GameManager Instance;
 
     // 2. 관리할 데이터 변수들을 선언합니다.
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // 초기 게임 상태
-        gState = GameState.Run;
+        gState = GameState.Ready;
     }
 
     // 4. 데이터를 변경하는 메서드들 모음

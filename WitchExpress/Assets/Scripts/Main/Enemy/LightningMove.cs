@@ -11,6 +11,12 @@ public class LightningMove : MonoBehaviour
 
     private void Update()
     {
+        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
+        if (GameManager.Instance.gState != GameManager.GameState.Run)
+        {
+            return;
+        }
+
         // transform.forward는 오브젝트가 바라보는 앞쪽 방향을 의미합니다.
         // moveSpeed 속도로 앞쪽 방향으로 계속 이동시킵니다.
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
