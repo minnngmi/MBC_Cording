@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyIdx: 0
+  damage: 0
   scoreValue: 1
   speed: 3
   explosionFactory: {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
@@ -147,7 +148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightningPrefab: {fileID: 313956937570624664, guid: bd2bf21b6b5cd1d428572063ed63a9a2, type: 3}
-  poolSize: 9
+  poolSize: 3
+  lightningPool: []
   fireInterval: 1.5
   lightningEffect: {fileID: 5822436232809456948}
   firePoint: {fileID: 7262974390590293331}

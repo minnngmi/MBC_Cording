@@ -115,7 +115,7 @@ MonoBehaviour:
   damage: 10
   scoreValue: 1
   speed: 6
-  explosionFactory: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 3}
+  explosionFactory: {fileID: 1247311384876784, guid: 6306d1615a5f97345b304da6de8dd92c, type: 3}
 --- !u!1001 &7704924149200230599
 PrefabInstance:
   m_ObjectHideFlags: 0

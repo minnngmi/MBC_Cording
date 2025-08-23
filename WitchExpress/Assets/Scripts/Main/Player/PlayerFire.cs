@@ -83,8 +83,7 @@ public class PlayerFire : MonoBehaviour
         }
 
         // 스킬 코루틴이 실행 중이 아닐 때만 일반 공격과 스킬 입력을 받음
-        if (skillCoroutine == null)
-        {
+       
             // 일반 공격 로직
             // 목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.
             // - 만약 사용자가 ctrl 버튼을 누르면
@@ -111,7 +110,7 @@ public class PlayerFire : MonoBehaviour
             }
             // 스킬 사용 로직을 별도 메서드로 관리
             CheckForSkillInput();
-        }
+        
     }
 
     // 스킬 사용 가능 상태 이벤트 수신시,  호출되는 메서드
