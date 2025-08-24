@@ -5,6 +5,8 @@ using UnityEngine.Video; // 비디오 재생을 위해 필요한 라이브러리 추가
 
 public class PlayerFire : MonoBehaviour
 {
+
+    [Header("Bullet 오브젝트 풀")]
     //총알 생산할 공장
     public GameObject bulletFactory;
 
@@ -20,6 +22,7 @@ public class PlayerFire : MonoBehaviour
     // 공격 모션
     public Animator witchAttack;
 
+    [Header("특수 스킬 설정")]
     // 스킬에 필요한 새로운 변수들
     public VideoPlayer skillVideoPlayer; // 동영상 재생을 위한 VideoPlayer 컴포넌트
     public GameObject skillVideoUIObject;  // Raw Image를 담고 있는 UI 오브젝트 변수
@@ -37,8 +40,10 @@ public class PlayerFire : MonoBehaviour
     // PauseManager 스크립트와 연결하기 위한 변수
     private PauseManager pauseManager;
 
-    // Background 스크립트와 연결하기 위한 변수
-    private Background backgroundManager;
+    [Header("배경색 관리 스크립트")]
+    // BackgroundColor 스크립트와 연결하기 위한 변수
+    public BackgroundColor backgroundColor1;
+    public BackgroundColor backgroundColor2;
 
     private void Start()
     {
@@ -68,8 +73,6 @@ public class PlayerFire : MonoBehaviour
 
         // 씬에서 PauseManager 스크립트를 찾아 연결
         pauseManager = FindObjectOfType<PauseManager>();
-        // 씬에서 Background 스크립트를 찾아 연결
-        backgroundManager = FindObjectOfType<Background>();
 
         // 동영상 Raw Image를 담고 있는 UI 오브젝트 비활성
         skillVideoUIObject.SetActive(false);
@@ -146,7 +149,8 @@ public class PlayerFire : MonoBehaviour
         canUseSkill = false;
 
         // 배경 색상을 어둡게 변경
-        backgroundManager.DarkenBackground();
+        backgroundColor1.DarkenBackground();
+        backgroundColor2.DarkenBackground();
 
         Debug.Log("PlayerFire: Special Skill Activated!");
 
@@ -186,7 +190,10 @@ public class PlayerFire : MonoBehaviour
         yield return new WaitForSeconds(20f);
         
         Debug.Log("스킬 지속 시간 종료!");
-        backgroundManager.LightenBackground();
+
+        // 배경 색상을 원래대로 변경
+        backgroundColor1.LightenBackground();
+        backgroundColor2.LightenBackground();
 
         // 코루틴 종료 시 특수 공격을 비활성화
         if (skillEffectObject != null)

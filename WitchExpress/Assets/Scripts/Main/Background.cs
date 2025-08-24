@@ -1,67 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Background : MonoBehaviour
+
 {
-    //½ºÅ©·Ñ¼Óµµ
-    public float scrollSpeed = 0.2f;
+Â  Â  //ìŠ¤í¬ë¡¤ì†ë„
+Â  Â  public float scrollSpeed = 0.2f;
 
-    // ¹è°æÀÇ ·»´õ·¯ ÄÄÆ÷³ÍÆ®¸¦ ´ãÀ» º¯¼ö
-    private MeshRenderer backgroundRenderer;
+Â  Â  // ë°°ê²½ì˜ ë Œë”ëŸ¬ ì»´í¬ë„ŒíŠ¸ë¥¼ ë‹´ì„ ë³€ìˆ˜
+Â  Â  // private MeshRenderer backgroundRenderer;
+Â  Â  // ë Œë”ëŸ¬ì˜ materialì„ ë°”ë¡œ ì ‘ê·¼í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+Â  Â  public Material backgroundMaterial;
 
-    // ·»´õ·¯ÀÇ materialÀ» ¹Ù·Î Á¢±ÙÇÏ±â À§ÇÑ º¯¼ö
-    private Material backgroundMaterial;
 
-    // ¸ŞÅ×¸®¾óÀÇ ±âº» »ö»ó (Èò»ö)°ú ¾îµÎ¿î »ö»ó (È¸»ö)À» ÀúÀåÇÒ º¯¼ö
-    private Color originalColor = Color.white;
-    private Color darkenedColor = new Color(0.427f, 0.427f, 0.427f, 1.0f); // 6D6D6D
-
-    private void Start()
+Â  Â  // 1. ì‚´ì•„ ìˆëŠ” ë™ì•ˆ ê³„ì† í•˜ê³  ì‹¶ë‹¤.
+Â  Â  private void Update()
     {
-
-        // ¹è°æ ¿ÀºêÁ§Æ®ÀÇ Renderer ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
-        backgroundRenderer = GetComponent<MeshRenderer>();
-
-        // RendererÀÇ materialÀ» ÇÑ ¹ø¸¸ °¡Á®¿Í¼­ º¯¼ö¿¡ ÀúÀåÇÕ´Ï´Ù.
-        if (backgroundRenderer != null)
-        {
-            backgroundMaterial = backgroundRenderer.material;
-        }
-    }
-
-
-    // 1. »ì¾Æ ÀÖ´Â µ¿¾È °è¼Ó ÇÏ°í ½Í´Ù.
-    private void Update()
-    {
-        // ¹è°æ ½ºÅ©·Ñ ±â´ÉÀº ±×´ë·Î µÓ´Ï´Ù.
-        if (backgroundMaterial != null)
+Â  Â  Â  Â  // ë°°ê²½ ìŠ¤í¬ë¡¤ ê¸°ëŠ¥ì€ ê·¸ëŒ€ë¡œ ë‘¡ë‹ˆë‹¤.
+Â  Â  Â  Â  if (backgroundMaterial != null)
         {
             Vector2 direction = Vector2.up;
             backgroundMaterial.mainTextureOffset += direction * scrollSpeed * Time.deltaTime;
-        }
-    }
-
-    // ¹è°æ »ö»óÀ» ¾îµÓ°Ô ¸¸µå´Â ¸Ş¼­µå
-    public void DarkenBackground()
-    {
-        Debug.Log("¹è°æ »ö»óÀÌ ¾îµÎ¿öÁı´Ï´Ù.");
-        if (backgroundRenderer != null)
-        {
-            //backgroundMaterial.SetColor("Main_BG", darkenedColor);
-            backgroundMaterial.color = darkenedColor;
-        }
-    }
-
-    // ¹è°æ »ö»óÀ» ¿ø·¡´ë·Î (Èò»ö) µÇµ¹¸®´Â ¸Ş¼­µå
-    public void LightenBackground()
-    {
-        if (backgroundRenderer != null)
-        {
-            // ¸ŞÅ×¸®¾óÀÇ »ö»óÀ» ¿ø·¡ÀÇ Èò»öÀ¸·Î º¯°æ
-            backgroundMaterial.color = originalColor;
-
-            Debug.Log("¹è°æ »ö»óÀÌ ¿ø·¡´ë·Î µ¹¾Æ¿Ô½À´Ï´Ù.");
         }
     }
 }
