@@ -40,6 +40,9 @@ public class PlayerFire : MonoBehaviour
     // PauseManager 스크립트와 연결하기 위한 변수
     private PauseManager pauseManager;
 
+    // 스킬 사용시 배경 이펙트
+    public GameObject skillEffectBG;
+
     [Header("배경색 관리 스크립트")]
     // BackgroundColor 스크립트와 연결하기 위한 변수
     public BackgroundColor backgroundColor1;
@@ -48,6 +51,8 @@ public class PlayerFire : MonoBehaviour
     private void Start()
     {
         skillEffectObject.SetActive(false);
+        skillEffectBG.SetActive(false);
+
         // 오브젝트 풀 리스트로 관리
         //탄창의 크기를 총알을 담을 수 있는 크기로 만들어준다.
         bulletObjectPool = new List<GameObject>();
@@ -146,11 +151,18 @@ public class PlayerFire : MonoBehaviour
     // 특수 스킬 발동 코루틴
     private IEnumerator SkillSequence()
     {
+        // GameManager에 스킬이 시작되었음을 알립니다.
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.isSkillActive = true;
+        }
+
         canUseSkill = false;
 
         // 배경 색상을 어둡게 변경
         backgroundColor1.DarkenBackground();
         backgroundColor2.DarkenBackground();
+        skillEffectBG.SetActive(true);
 
         Debug.Log("PlayerFire: Special Skill Activated!");
 
@@ -166,6 +178,8 @@ public class PlayerFire : MonoBehaviour
             {
                 skillVideoUIObject.SetActive(true);
                 skillVideoPlayer.Play();
+                backgroundColor1.offBackground();
+                backgroundColor2.offBackground();
                 Debug.Log("스킬 동영상 재생 시작!");
 
                 // 동영상 재생 시작과 동시에 게임 일시정지!
@@ -199,8 +213,16 @@ public class PlayerFire : MonoBehaviour
         if (skillEffectObject != null)
         {
             skillEffectObject.SetActive(false);
+            skillEffectBG.SetActive(false);
             Debug.Log("특수 공격 비활성화!");
         }
+
+        // GameManager에 스킬이 끝났음을 알립니다.
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.isSkillActive = false;
+        }
+
         // 코루틴 종료를 나타냄
         skillCoroutine = null;
     }

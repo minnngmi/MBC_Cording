@@ -150,11 +150,11 @@ MonoBehaviour:
   lightningPrefab: {fileID: 313956937570624664, guid: bd2bf21b6b5cd1d428572063ed63a9a2, type: 3}
   poolSize: 3
   lightningPool: []
-  fireInterval: 1.5
+  fireInterval: 1
   lightningEffect: {fileID: 5822436232809456948}
   firePoint: {fileID: 7262974390590293331}
-  attackDelay: 1
-  fireDelay: 1
+  attackDelay: 0.8
+  fireDelay: 0.5
 --- !u!114 &-4758664882334866635
 MonoBehaviour:
   m_ObjectHideFlags: 0

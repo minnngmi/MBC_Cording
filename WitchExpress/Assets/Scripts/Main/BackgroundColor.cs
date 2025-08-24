@@ -13,22 +13,16 @@ public class BackgroundColor : MonoBehaviour
     public float fadeSpeed = 2f;
 
     // 현재 색상 목표를 추적하는 변수
-    //private Color targetColor;
-    // 배경의 렌더러 컴포넌트를 담을 변수
-    private MeshRenderer backgroundRenderer;
+    private Color targetColor;
+
 
     private void Start()
     {
-        // 배경 오브젝트의 Renderer 컴포넌트를 가져옵니다.
-        //backgroundRenderer = GetComponent<MeshRenderer>();
-
         // 초기 목표 색상을 normalColor로 설정
         if (backgroundMaterial != null)
         {
-            Debug.Log($"Main_BG Material 찾음: _Color");
-
             backgroundMaterial.color = normalColor;
-            
+            targetColor = backgroundMaterial.color;
         }
         else
         {
@@ -36,18 +30,36 @@ public class BackgroundColor : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //색상을 부드럽게 변경
+        if (backgroundMaterial != null)
+        {
+            // 현재 색상을 목표 색상으로 부드럽게 변경(Lerp)
+            Color currentColor = backgroundMaterial.color;
+            Color newColor = Color.Lerp(currentColor, targetColor, Time.deltaTime * fadeSpeed);
+            backgroundMaterial.color = newColor; // 또는 SetColor("_Color", newColor);
+        }
+    }
 
     // 배경 색상을 어둡게 만드는 메서드
+
+    public void offBackground()
+    {
+        Debug.Log("영상의 배경 색상이 어두워집니다.");
+        backgroundMaterial.color = darkColor;
+    }
+    
     public void DarkenBackground()
     {
         Debug.Log("배경 색상이 어두워집니다.");
-        backgroundMaterial.color = darkColor;
+        targetColor = darkColor;
     }
 
     // 배경 색상을 원래대로 (흰색) 되돌리는 메서드
     public void LightenBackground()
     {
         Debug.Log("배경 색상이 원래대로 돌아왔습니다.");
-        backgroundMaterial.color = normalColor;
+        targetColor = normalColor;
     }
 }

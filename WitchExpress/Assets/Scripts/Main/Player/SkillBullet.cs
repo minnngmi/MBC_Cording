@@ -2,32 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class SkillBullet : MonoBehaviour
 {
-    public float speed;
-    
 
-    void Update()
-    {
-        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
-        if (GameManager.Instance.gState != GameManager.GameState.Run)
-        {
-            return;
-        }
-
-        // 1. 방향을 구한다.
-        Vector3 dir = Vector3.forward;
-
-        // 2. 이동하고 싶다. 공식 P = P0 + vt
-        transform.position += dir * speed * Time.deltaTime;
-    }
-
-    // 플레이어의 총알에 맞았을시
-    private void OnCollisionEnter(Collision other)
+    private void OnParticleCollision(GameObject other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("적을 공격합니다.");
             // 1. 충돌한 오브젝트의 클래스 컴포넌트 가져오기
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
@@ -53,7 +34,7 @@ public class Bullet : MonoBehaviour
             // 맞은 상대 비활성화
             other.gameObject.SetActive(false);
 
-            
+
             // EnemyManager 객체 얻어오기
             EnemyManager em =
                 GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
@@ -62,16 +43,8 @@ public class Bullet : MonoBehaviour
             int enemyIdx = enemy.enemyIdx;
             // 해당 적 오브젝트 풀 리스트에 추가
             em.enemyObjectPool[enemyIdx].Add(other.gameObject);
-            
+
 
         }
-
-         // 자신(총알)도 비활성화
-        gameObject.SetActive(false);
-        // PlayerFire 객체 얻어오기
-        PlayerFire player =
-            GameObject.Find("Player").GetComponent<PlayerFire>();
-        // 오브젝트 풀 리스트에 총알 추가
-        player.bulletObjectPool.Add(gameObject);
     }
 }

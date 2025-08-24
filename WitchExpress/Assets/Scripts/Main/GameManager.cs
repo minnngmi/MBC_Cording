@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     public Action<int> OnMPChanged; //  2) MP 변경 이벤트
     public Action OnSkillActivated; // 3) 스킬 사용 이벤트
 
+    // 특수 스킬 활성화 상태를 추적하는 변수
+    public bool isSkillActive = false; 
+
+
     // 게임 상태 상수
     public enum GameState
     {
@@ -66,15 +70,23 @@ public class GameManager : MonoBehaviour
     // 1) 적 처치 횟수를 증가시키는 메서드
     public void IncreaseEnemyKills()
     {
-        enemyKills++;
-        IncreasePlayerMP(5);  // MP 5 식 증가
-        Debug.Log("적 처치 수: " + enemyKills);
-
-        // 추가 작업 (예: 특정 횟수 달성 시 아이템 생성)
-        if (enemyKills % 10 == 0)
+        if (!isSkillActive)
         {
-            Debug.Log("축하합니다! 특별 아이템이 나타납니다!");
-            // TODO: 특별 아이템 생성 코드를 여기에 작성
+            enemyKills++;
+            IncreasePlayerMP(5);  // MP 5 식 증가
+            Debug.Log("적 처치 수: " + enemyKills);
+
+            // 추가 작업 (예: 특정 횟수 달성 시 아이템 생성)
+            if (enemyKills % 10 == 0)
+            {
+                Debug.Log("축하합니다! 특별 아이템이 나타납니다!");
+                // TODO: 특별 아이템 생성 코드를 여기에 작성
+            }
+        }
+
+        else
+        {
+            Debug.Log("스킬 사용 중에는 MP를 획득할 수 없습니다.");
         }
     }
 
