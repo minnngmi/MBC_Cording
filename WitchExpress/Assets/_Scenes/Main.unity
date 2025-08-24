@@ -372,7 +372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a4cad25befb7a45991cedf096c1c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgMaterial: {fileID: 2100000, guid: d86586b3cfceb5a4d8a256d81ccce70c, type: 2}
   scrollSpeed: 0.25
 --- !u!23 &91183623
 MeshRenderer:
@@ -1395,7 +1394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a4cad25befb7a45991cedf096c1c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgMaterial: {fileID: 2100000, guid: 33d411892feffcf4685abfda123116ed, type: 2}
   scrollSpeed: 0.2
 --- !u!1 &705507993
 GameObject:

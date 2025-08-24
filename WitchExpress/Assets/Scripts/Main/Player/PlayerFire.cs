@@ -37,6 +37,9 @@ public class PlayerFire : MonoBehaviour
     // PauseManager 스크립트와 연결하기 위한 변수
     private PauseManager pauseManager;
 
+    // Background 스크립트와 연결하기 위한 변수
+    private Background backgroundManager;
+
     private void Start()
     {
         skillEffectObject.SetActive(false);
@@ -65,6 +68,10 @@ public class PlayerFire : MonoBehaviour
 
         // 씬에서 PauseManager 스크립트를 찾아 연결
         pauseManager = FindObjectOfType<PauseManager>();
+        // 씬에서 Background 스크립트를 찾아 연결
+        backgroundManager = FindObjectOfType<Background>();
+
+        // 동영상 Raw Image를 담고 있는 UI 오브젝트 비활성
         skillVideoUIObject.SetActive(false);
 
         // 동영상이 끝났을 때를 감지하는 이벤트에 연결
@@ -138,6 +145,9 @@ public class PlayerFire : MonoBehaviour
     {
         canUseSkill = false;
 
+        // 배경 색상을 어둡게 변경
+        backgroundManager.DarkenBackground();
+
         Debug.Log("PlayerFire: Special Skill Activated!");
 
         if (GameManager.Instance != null)
@@ -176,6 +186,7 @@ public class PlayerFire : MonoBehaviour
         yield return new WaitForSeconds(20f);
         
         Debug.Log("스킬 지속 시간 종료!");
+        backgroundManager.LightenBackground();
 
         // 코루틴 종료 시 특수 공격을 비활성화
         if (skillEffectObject != null)
