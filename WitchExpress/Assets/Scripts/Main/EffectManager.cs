@@ -58,4 +58,6 @@ public class EffectManager : MonoBehaviour
             depthOfField.enabled.value = !depthOfField.enabled.value;
         }
     }
+
+
 }
