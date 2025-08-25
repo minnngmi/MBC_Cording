@@ -7,16 +7,16 @@ public class EnemyBooMove : MonoBehaviour
     // 공격에 사용할 게임 오브젝트들을 연결할 변수들
     // Inspector 창에서 드래그하여 연결
 
-    // ⭐ 수정: 발사할 번개 프리팹 (풀 생성에 사용)
+    // 발사할 번개 프리팹 (풀 생성에 사용)
     public GameObject lightningPrefab;
 
-    // ⭐ 추가: 오브젝트 풀의 크기를 인스펙터에서 설정할 수 있게 합니다.
+    // 오브젝트 풀의 크기를 인스펙터에서 설정할 수 있게 합니다.
     public int poolSize;
 
-    // ⭐ 수정: 오브젝트 풀을 관리할 리스트
+    // 오브젝트 풀을 관리할 리스트
     public List<GameObject> lightningPool;
 
-    // ⭐ 추가: 번개를 몇 초마다 발사할지 설정합니다.
+    // 번개를 몇 초마다 발사할지 설정합니다.
     public float fireInterval = 1.0f;
 
     public GameObject lightningEffect; // 번개 발사 시 나타날 이펙트 프리팹
@@ -76,7 +76,7 @@ public class EnemyBooMove : MonoBehaviour
     {
         // 1. 몬스터가 나타난 후 2초를 기다립니다.
         // 기존 코드의 attackDelay는 이 단계에서 활용됩니다.
-        attackDelay = Random.Range(attackDelay - 0.5f, attackDelay + 0.5f);
+        attackDelay = Random.Range(attackDelay - 0.3f, attackDelay);
         yield return new WaitForSeconds(attackDelay);
 
         // 2. 번개 이펙트 오브젝트를 활성화합니다.

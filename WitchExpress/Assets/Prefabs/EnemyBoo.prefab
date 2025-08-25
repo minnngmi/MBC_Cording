@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightningPrefab: {fileID: 313956937570624664, guid: bd2bf21b6b5cd1d428572063ed63a9a2, type: 3}
-  poolSize: 3
+  poolSize: 6
   lightningPool: []
-  fireInterval: 1
+  fireInterval: 1.5
   lightningEffect: {fileID: 5822436232809456948}
   firePoint: {fileID: 7262974390590293331}
   attackDelay: 0.8

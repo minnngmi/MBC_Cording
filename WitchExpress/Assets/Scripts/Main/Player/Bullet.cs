@@ -27,7 +27,6 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("적을 공격합니다.");
             // 1. 충돌한 오브젝트의 클래스 컴포넌트 가져오기
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
