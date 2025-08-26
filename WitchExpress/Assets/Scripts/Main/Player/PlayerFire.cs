@@ -167,11 +167,6 @@ public class PlayerFire : MonoBehaviour
 
         Debug.Log("PlayerFire: Special Skill Activated!");
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.DecreasePlayerMP(100);
-        }
-
         // 동영상이 아직 재생되지 않았을 경우에만 동영상 재생
         if (!hasPlayedSkillVideo)
         {
@@ -233,6 +228,11 @@ public class PlayerFire : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.isSkillActive = false;
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.DecreasePlayerMP(100);
         }
 
         // 코루틴 종료를 나타냄

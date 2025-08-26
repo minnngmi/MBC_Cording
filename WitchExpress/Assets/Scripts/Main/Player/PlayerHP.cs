@@ -7,6 +7,14 @@ public class PlayerHP : MonoBehaviour
     // 데미지 이펙트 프리팹 연결 변수
     public GameObject damageEffect;
 
+
+    private void Update()
+    {
+        // 포션 사용, HP 회복 
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+            GameManager.Instance.DereasePosion();
+    }
+
     public void TakeDamage(int damage)
     {
         // GameManager의 DecreasePlayerHP 메서드를 호출하여 데미지를 전달
@@ -17,7 +25,7 @@ public class PlayerHP : MonoBehaviour
 
         }
 
-        // 데미지를 입을 때 이펙트 생성
+        // 데미지를 입을 때 카메라 흔들리는 이펙트 생성
         // 이펙트 프리팹 변수가 비어있지 않은지 확인
         if (damageEffect != null)
         {

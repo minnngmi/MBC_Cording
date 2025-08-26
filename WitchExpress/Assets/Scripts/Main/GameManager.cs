@@ -7,26 +7,27 @@ using System;  // Action 사용을 위해
 
 public class GameManager : MonoBehaviour
 {
-    // 1. 싱글톤 변수: static 변수로 자기 자신을 담을 그릇을 만듭니다.
+    // 싱글톤 변수: static 변수로 자기 자신을 담을 그릇을 만듭니다.
     public static GameManager Instance;
 
-    // 2. 관리할 데이터 변수들을 선언합니다.
-    public int enemyKills;
-    public int candyCount;
-    public int playerHP = 100; // 초기 HP 설정
-    public int maxHP = 100;
-    public int playerMP = 0; // MP 변수 추가
+    // 관리할 데이터 변수들을 선언합니다.
+    public int enemyKills;               // 적을 처치한 횟수
+    public int candyCount;             // 획득한 사탕 갯수
+    public int HPpotion;                 // 초기 포션 갯수
+
+    public int playerHP = 100;       // 초기 HP 값
+    public int maxHP = 100;         
+    public int playerMP = 0;          // 초기 MP 값
     public int maxMP = 100;
 
     // 이벤트 모음
     // UIManager가 이 이벤트를 구독하여 HP/MP 슬라이더를 업데이트
-    public Action<int> OnHPChanged; //  1) HP 변경 이벤트
-    public Action<int> OnMPChanged; //  2) MP 변경 이벤트
-    public Action OnSkillActivated; // 3) 스킬 사용 이벤트
+    public Action<int> OnHPChanged;      //  1) HP 변경 이벤트
+    public Action<int> OnMPChanged;     //  2) MP 변경 이벤트
+    public Action OnSkillActivated;             // 3) 스킬 사용 이벤트
 
     // 특수 스킬 활성화 상태를 추적하는 변수
     public bool isSkillActive = false; 
-
 
     // 게임 상태 상수
     public enum GameState
@@ -39,8 +40,7 @@ public class GameManager : MonoBehaviour
     // 현재의 게임 상태 변수
     public GameState gState;
 
-
-    // 3. Awake 메서드: 로드될 때 가장 먼저 실행
+    // Awake 메서드 : 로드될 때 가장 먼저 실행
     private void Awake()
     {
         // 인스턴스가 이미 존재하는지 확인
@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         {
             // 인스턴스가 없으면, 이 GameManager 오브젝트를 인스턴스로 지정
             Instance = this;
-
             // 씬이 바뀌어도 파괴되지 않게(필요에 따라 선택)
             DontDestroyOnLoad(gameObject);
         }
@@ -65,28 +64,21 @@ public class GameManager : MonoBehaviour
         gState = GameState.Ready;
     }
 
-    // 4. 데이터를 변경하는 메서드들 모음
-
-    // 1) 적 처치 횟수를 증가시키는 메서드
+    
+    // 메서드 모음
+    // 1. 적 처치 카운트 메서드
     public void IncreaseEnemyKills()
     {
-        if (!isSkillActive)
-        {
-            enemyKills++;
-            IncreasePlayerMP(5);  // MP 5 식 증가
-            Debug.Log("적 처치 수: " + enemyKills);
+        enemyKills++;
+        Debug.Log("적 처치 수: " + enemyKills);
 
-            // 추가 작업 (예: 특정 횟수 달성 시 아이템 생성)
-            if (enemyKills % 10 == 0)
-            {
-                Debug.Log("축하합니다! 특별 아이템이 나타납니다!");
-                // TODO: 특별 아이템 생성 코드를 여기에 작성
-            }
-        }
+         // (1) MP 5 증가
+        IncreasePlayerMP(5);
 
-        else
+        if (enemyKills % 10 == 0)
         {
-            Debug.Log("스킬 사용 중에는 MP를 획득할 수 없습니다.");
+            // (2) 포션 1 증가
+            IncreasePosion();
         }
     }
 
@@ -107,8 +99,7 @@ public class GameManager : MonoBehaviour
             playerHP = 0;
         }
 
-        // HP가 변경되었음을 알리는 이벤트 호출
-        // UIManager가 이 이벤트를 구독하고 있다면 UIManager의 코드가 실행됩니다.
+        // HP가 변경되었음을 알리는 이벤트 호출(UIManager가 구독 중)
         OnHPChanged?.Invoke(playerHP);
 
         if (playerHP <= 0)
@@ -150,5 +141,28 @@ public class GameManager : MonoBehaviour
 
         // MP가 변경되었음을 알리는 이벤트 호출
         OnMPChanged?.Invoke(playerMP);
+    }
+
+    // (6) 포션 갯수를 증가 시키는 메서드
+    public void IncreasePosion()
+    {
+        HPpotion++;
+    }
+
+    // (7) 포션 갯수를 감소 시키는 메서드(포션 사용)
+    public void DereasePosion()
+    {
+        HPpotion--;
+        playerHP = maxHP;
+        candyCount = candyCount - 15;
+
+        // 포션 갯수가  0 미만으로 내려가지 않도록 제한
+        if (HPpotion < 0)
+        {
+            HPpotion = 0;
+        }
+
+        // HP가 변경되었음을 알리는 이벤트 호출(UIManager가 구독 중)
+        OnHPChanged?.Invoke(playerHP);
     }
 }
