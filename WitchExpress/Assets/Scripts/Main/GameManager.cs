@@ -82,11 +82,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 2) 사탕 카운트를 증가시키는 메서드
+    // 2) 사탕 수를 증가시키는 메서드
     public void IncreaseCandyCount()
     {
         candyCount++;
         Debug.Log("사탕 획득 수: " + candyCount);
+    }
+
+    // 2) 사탕 수를 감소시키는 메서드
+    public void DecreaseCandyCount(int amount)
+    {
+        candyCount = candyCount - amount;
+
+        // 사탕이 0 미만으로 내려가지 않도록 제한
+        if (candyCount < 0)
+        {
+            candyCount = 0;
+        }
     }
 
     // 3) 플레이어 HP를 감소시키는 메서드
@@ -152,17 +164,25 @@ public class GameManager : MonoBehaviour
     // (7) 포션 갯수를 감소 시키는 메서드(포션 사용)
     public void DereasePosion()
     {
-        HPpotion--;
-        playerHP = maxHP;
-        candyCount = candyCount - 15;
-
-        // 포션 갯수가  0 미만으로 내려가지 않도록 제한
-        if (HPpotion < 0)
+        if (candyCount < 15)
         {
-            HPpotion = 0;
+            Debug.Log("캔디 수가 부족합니다.");
+            return;
         }
+        else
+        {
+            HPpotion--;
+            playerHP = maxHP;
+            DecreaseCandyCount(15);
 
-        // HP가 변경되었음을 알리는 이벤트 호출(UIManager가 구독 중)
-        OnHPChanged?.Invoke(playerHP);
+            // 포션 갯수가  0 미만으로 내려가지 않도록 제한
+            if (HPpotion < 0)
+            {
+                HPpotion = 0;
+            }
+
+            // HP가 변경되었음을 알리는 이벤트 호출(UIManager가 구독 중)
+            OnHPChanged?.Invoke(playerHP);
+        }
     }
 }

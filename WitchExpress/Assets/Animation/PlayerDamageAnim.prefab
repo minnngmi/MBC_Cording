@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8194992990867289332}
   - component: {fileID: 1347780276449787774}
   m_Layer: 0
-  m_Name: CFXR3 Fire Explosion B 1
+  m_Name: PlayerDamageAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
