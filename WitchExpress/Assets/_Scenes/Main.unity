@@ -469,7 +469,7 @@ MonoBehaviour:
   candyCount: 0
   playerHP: 100
   maxHP: 100
-  playerMP: 0
+  playerMP: 90
   maxMP: 100
   isSkillActive: 0
   gState: 0
@@ -2795,7 +2795,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742179335}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 3b89e69f74766b546bf41a32df6d86bb, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 9ce58519e90c3fb489ba2e318d839830, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 963194227}

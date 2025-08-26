@@ -81,6 +81,7 @@ public class PlayerFire : MonoBehaviour
 
         // 동영상 Raw Image를 담고 있는 UI 오브젝트 비활성
         skillVideoUIObject.SetActive(false);
+        skillVideoPlayer.Stop();
 
         // 동영상이 끝났을 때를 감지하는 이벤트에 연결
         if (skillVideoPlayer != null)
@@ -176,14 +177,25 @@ public class PlayerFire : MonoBehaviour
         {
             if (skillVideoPlayer != null)
             {
+                // 비디오 재생 준비 시작
+                skillVideoPlayer.Prepare();
+                // 비디오가 준비될 때까지 대기
+                while (!skillVideoPlayer.isPrepared)
+                {
+                    yield return null;
+                }
+
                 skillVideoUIObject.SetActive(true);
+                // 비디오 재생
                 skillVideoPlayer.Play();
+
+                // 배경 색상을 어둡게 만드는 메서드 호출
                 backgroundColor1.offBackground();
                 backgroundColor2.offBackground();
                 Debug.Log("스킬 동영상 재생 시작!");
 
                 // 동영상 재생 시작과 동시에 게임 일시정지!
-                // PauseManager 스크립트의 PauseGame() 메서드를 호출
+                // PauseManager 스크립트의 PauseGame() 메서드 호출
                 if (pauseManager != null)
                 {
                     pauseManager.PauseGame();
