@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;  // Action 사용을 위해 
 
-
-
 public class GameManager : MonoBehaviour
 {
-    // 싱글톤 변수: static 변수로 자기 자신을 담을 그릇을 만듭니다.
+    // 싱글톤 변수: static 변수로 자기 자신을 담을 그릇 생성
     public static GameManager Instance;
 
-    // 관리할 데이터 변수들을 선언합니다.
+    // 관리할 데이터 변수들 선언
     public int enemyKills;               // 적을 처치한 횟수
     public int candyCount;             // 획득한 사탕 갯수
     public int HPpotion;                 // 초기 포션 갯수
+
+    public GameObject PotionEffect;    // 포션 사용 가능 이펙트
+    private int PosionCandy;                 // 포션 사용시 사라지는 캔디량
+    private int potionUsedCount = 0;   // 포션 사용 횟수를 추적하는 변수
 
     public int playerHP = 100;       // 초기 HP 값
     public int maxHP = 100;         
@@ -22,9 +24,10 @@ public class GameManager : MonoBehaviour
 
     // 이벤트 모음
     // UIManager가 이 이벤트를 구독하여 HP/MP 슬라이더를 업데이트
-    public Action<int> OnHPChanged;      //  1) HP 변경 이벤트
-    public Action<int> OnMPChanged;     //  2) MP 변경 이벤트
-    public Action OnSkillActivated;             // 3) 스킬 사용 이벤트
+    public Action<int> OnHPChanged;      // (1) HP 변경 이벤트
+    public Action<int> OnMPChanged;     // (2) MP 변경 이벤트
+    public Action OnSkillActivated;             // (3) 스킬 사용 이벤트
+    public Action<int> OnPotionUsed;       // (4) 포션 사용시 소모된 캔디량 이벤트
 
     // 특수 스킬 활성화 상태를 추적하는 변수
     public bool isSkillActive = false; 
@@ -62,9 +65,19 @@ public class GameManager : MonoBehaviour
     {
         // 초기 게임 상태
         gState = GameState.Ready;
+
+        // 포션 사용 가능 이펙트 off
+        PotionEffect.SetActive(false);
+
+        // 포션에 필요한 캔디 초기값 설정
+        PosionCandy = 10;
     }
 
-    
+    private void Update()
+    {
+        CheckPotionEffect();
+    }
+
     // 메서드 모음
     // 1. 적 처치 카운트 메서드
     public void IncreaseEnemyKills()
@@ -160,20 +173,26 @@ public class GameManager : MonoBehaviour
     {
         HPpotion++;
     }
-
+  
     // (7) 포션 갯수를 감소 시키는 메서드(포션 사용)
     public void DereasePosion()
     {
-        if (candyCount < 15)
+        if (candyCount < PosionCandy)
         {
             Debug.Log("캔디 수가 부족합니다.");
             return;
         }
         else
         {
+            // 포션 1개 사용하여 HP max 회복
             HPpotion--;
             playerHP = maxHP;
-            DecreaseCandyCount(15);
+
+            // 소모될 캔디 양을 변수에 저장
+            int consumedCandyAmount = PosionCandy; 
+
+            // 캔디 소모
+            DecreaseCandyCount(PosionCandy);
 
             // 포션 갯수가  0 미만으로 내려가지 않도록 제한
             if (HPpotion < 0)
@@ -183,6 +202,39 @@ public class GameManager : MonoBehaviour
 
             // HP가 변경되었음을 알리는 이벤트 호출(UIManager가 구독 중)
             OnHPChanged?.Invoke(playerHP);
+            // 소모된 캔디량을 알리는 이벤트 호출
+            OnPotionUsed?.Invoke(consumedCandyAmount);
+
+            // 포션 사용 횟수 증가 및 PosionCandy 값 업데이트
+            potionUsedCount++;
+
+            if (potionUsedCount <= 3)
+            {
+                PosionCandy = 10;
+            }
+            else if (potionUsedCount <= 8) // 3번 사용 이후부터 8번까지 (총 5번)
+            {
+                PosionCandy = 15;
+
+            }
+            else
+            {
+                PosionCandy = 20; // 8번 사용 이후부터
+            }
+        }
+    }
+
+    // (7) 포션 이펙트 상태를 확인하고 변경하는 메서드
+    private void CheckPotionEffect()
+    {
+        // 포션이 1개 이상 있고, 캔디 수가 충분할 때만 이펙트 활성화
+        if (candyCount >= PosionCandy && HPpotion > 0)
+        {
+            PotionEffect.SetActive(true);
+        }
+        else
+        {
+            PotionEffect.SetActive(false);
         }
     }
 }

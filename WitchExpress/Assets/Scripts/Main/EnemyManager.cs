@@ -4,27 +4,31 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    // 몬스터 등장 시간
+    [Header("스테이지 진행 시간 설정")]
+    // 스테이지 당 몬스터 등장 시간
     public float stageTime;
-    // 2탄 몬스터가 나오기까지의 대기시간 
-    public float secondStage = 5f;
+    // 2탄 스테이지 몹 나오기까지의 대기시간 
+    public float stageDelayTime = 5f;
+    // 보스 스테이지 시작 대기 시간
+    public float bossDelayTime = 5f;
+    public float bossStageTime;
 
+    [Header("적 스폰 설정")]
     // 적 스폰 최소시간
     public float minTime;
     // 적 스폰 최대시간
     public float maxTime;
-
-    // 적 공장
-    public GameObject[] enemyFactory;
-
-    // 오브젝트 풀 크기
-    public int poolSize; 
-
-    //오브젝트 풀 리스트 배열
-    public List<GameObject>[] enemyObjectPool;
-
     // 적 스폰 위치
     public Vector3 spawnValues;
+
+
+    [Header("오브젝트 풀 설정")]
+    // 적 공장
+    public GameObject[] enemyFactory;
+    // 오브젝트 풀 크기
+    public int poolSize; 
+    //오브젝트 풀 리스트 배열
+    public List<GameObject>[] enemyObjectPool;
 
 
     private void Update()
@@ -79,7 +83,7 @@ public class EnemyManager : MonoBehaviour
 
             Debug.Log($"몬스터가 등장합니다.");
 
-            // --- 첫 번째 몬스터만 스폰하는 구간 ---
+            // --- 첫 번째 몬스터만 스폰되는 구간 ---
             // 시간 타이머
             float patternChangeTimer = 0f;
 
@@ -108,11 +112,11 @@ public class EnemyManager : MonoBehaviour
                 break;
             }
 
-            // --- 3초 대기 후, 40초 동안 첫 번째, 두 번째 몬스터가 섞여서 스폰되는 구간 ---
-            yield return new WaitForSeconds(secondStage);
+            //  --- 대기 후, 두 번째 몬스터가 섞여 스폰되는 구간 ---
+            yield return new WaitForSeconds(stageDelayTime);
             patternChangeTimer = 0f;
 
-            // 40초 동안 현재 인덱스에 해당하는 적을 계속 스폰
+            // 현재 인덱스에 해당하는 적을 계속 스폰
             while (patternChangeTimer < stageTime)
             {
                 // 랜덤한 시간만큼 기다린 후 적을 스폰합니다.
@@ -141,11 +145,25 @@ public class EnemyManager : MonoBehaviour
                         enemyNum = 0;
                     }
                 }
-
                     // 적을 풀에서 꺼내 스폰하는 함수를 호출
                     SpawnEnemyFromPool(enemyNum);
             }
-            Debug.Log($"모든 몬스터 패턴이 종료되었습니다.");
+
+            //  ---대기 후, 보스 몬스터 등장 두둥 ---
+            yield return new WaitForSeconds(stageDelayTime);
+            patternChangeTimer = 0f;
+
+            while(patternChangeTimer < stageTime)
+            {
+
+            }
+            
+
+
+
+
+
+                Debug.Log($"모든 몬스터 패턴이 종료되었습니다.");
 
         }
     }

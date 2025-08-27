@@ -25,6 +25,11 @@ public class UIManager : MonoBehaviour
     public Text candyTxt;
     public Text posionTxt;
 
+    // 포션 사용 시 캔디 소모량을 표시할 Text UI 연결
+    public Text potionCandyText;
+    // Text UI에 부착된 Animator 컴포넌트 연결
+    private Animator candyTextAnimator;
+
 
     private void Start()
     {
@@ -32,12 +37,12 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             // OnHPChanged 이벤트 구독
-            // HP 변경될 때마다 UpdateHPSlider 메서드 호출
+            // HP 변경될 때마다  메서드 호출
             GameManager.Instance.OnHPChanged += UpdateHPSlider;
-
-            // OnMPChanged 이벤트 구독
-            // MP 변경될 때마다 UpdateMPSlider 메서드 호출
+            // MP 변경될 때마다 메서드 호출
             GameManager.Instance.OnMPChanged += UpdateMPSlider;
+            // 포션 사용으로 인해 캔디가 소모될 때마다 메서드 호출
+            GameManager.Instance.OnPotionUsed += OnPotionUsed;
 
 
             // 초기 HP 슬라이더 동기화
@@ -55,6 +60,11 @@ public class UIManager : MonoBehaviour
             // 캔디, 포션 카운트 초기화 0
             candyTxt.text = "0";
             posionTxt.text = "0";
+
+            //  캔디 소모량 비활성
+            potionCandyText.gameObject.SetActive(false);
+            //  Animator 컴포넌트
+            candyTextAnimator = potionCandyText.GetComponent<Animator>();
         }
     }
 
@@ -107,13 +117,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // 3. 포션 사용시 소모된 캔디량 표시 메서드
+    private void OnPotionUsed(int consumedAmount)
+    {
+        // 텍스트 내용 업데이트(코루틴 작동)
+        StartCoroutine(ShowCandyText(-consumedAmount));
+    }
+    // 캔디 소모량 텍스트를 잠시 보여줬다가 숨기는 코루틴
+    private IEnumerator ShowCandyText(int amount)
+    {
+        if (potionCandyText != null)
+        {
+            potionCandyText.text = amount.ToString();
+            potionCandyText.gameObject.SetActive(true);
+
+            // Show 트리거를 설정하여 애니메이션 시작
+            candyTextAnimator.SetTrigger("Show");
+
+            yield return new WaitForSeconds(1f); // 1초 동안 출력
+            potionCandyText.gameObject.SetActive(false);
+        }
+    }
+
     // 게임 종료 시 이벤트 구독 해제 (선택 사항이지만 좋은 습관)
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnHPChanged -= UpdateHPSlider;
-            GameManager.Instance.OnMPChanged -= UpdateMPSlider; 
+            GameManager.Instance.OnMPChanged -= UpdateMPSlider;
+            GameManager.Instance.OnPotionUsed -= OnPotionUsed;
         }
     }
 }
