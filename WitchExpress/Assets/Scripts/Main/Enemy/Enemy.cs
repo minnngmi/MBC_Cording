@@ -80,8 +80,6 @@ public class Enemy : MonoBehaviour
             {
                 playerHP.TakeDamage(damage); // PlayerHP 스크립트의 메서드
             }
-
-
         }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - Candy
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Enemy
   - Cloud
   - EnemyBoo
-  - 
+  - Boss
   - 
   - 
   - 

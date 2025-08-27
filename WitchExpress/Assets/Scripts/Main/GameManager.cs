@@ -8,18 +8,22 @@ public class GameManager : MonoBehaviour
     // 싱글톤 변수: static 변수로 자기 자신을 담을 그릇 생성
     public static GameManager Instance;
 
+
     // 관리할 데이터 변수들 선언
-    public int enemyKills;               // 적을 처치한 횟수
+    [Header("초기 아이템 설정")]
+    private int enemyKills;               // 적을 처치한 횟수
     public int candyCount;             // 획득한 사탕 갯수
     public int HPpotion;                 // 초기 포션 갯수
 
     public GameObject PotionEffect;    // 포션 사용 가능 이펙트
+    
     private int PosionCandy;                 // 포션 사용시 사라지는 캔디량
     private int potionUsedCount = 0;   // 포션 사용 횟수를 추적하는 변수
 
+    [Header("초기 캐릭터 상태 설정")]
     public int playerHP = 100;       // 초기 HP 값
-    public int maxHP = 100;         
     public int playerMP = 0;          // 초기 MP 값
+    public int maxHP = 100;         
     public int maxMP = 100;
 
     // 이벤트 모음
@@ -83,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseEnemyKills()
     {
         enemyKills++;
-        Debug.Log("적 처치 수: " + enemyKills);
+        //Debug.Log("적 처치 수: " + enemyKills);
 
          // (1) MP 5 증가
         IncreasePlayerMP(5);
@@ -99,7 +103,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseCandyCount()
     {
         candyCount++;
-        Debug.Log("사탕 획득 수: " + candyCount);
+        //Debug.Log("사탕 획득 수: " + candyCount);
     }
 
     // 2) 사탕 수를 감소시키는 메서드

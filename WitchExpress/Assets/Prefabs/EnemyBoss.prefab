@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6344964896271671938}
-  m_Layer: 0
+  - component: {fileID: 5634841957552852523}
+  m_Layer: 12
   m_Name: EnemyBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24,14 +25,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154964195464645036}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.94588387, z: -0.32450542, w: 0}
-  m_LocalPosition: {x: 0, y: -10, z: 12}
+  m_LocalRotation: {x: -0, y: -0.9458845, z: -0.32450345, w: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 6.1}
   m_LocalScale: {x: 1.6276, y: 1.6276, z: 1.6276}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8414560977594657662}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -37.871, y: -180, z: 0}
+--- !u!95 &5634841957552852523
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154964195464645036}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba1e2f8c79db6654ea1d62ed59cf1ec4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8308085631093427349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95,6 +117,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f7148853fa866da43b47ef0027d28bc5, type: 3}
       propertyPath: m_Name
       value: Pumpkin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f7148853fa866da43b47ef0027d28bc5, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

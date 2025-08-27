@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [Header("스테이지 진행 시간 설정")]
-    // 스테이지 당 몬스터 등장 시간
+    // 스테이지 당 몬스터 등장 시간 (30)
     public float stageTime;
     // 2탄 스테이지 몹 나오기까지의 대기시간 
     public float stageDelayTime = 5f;
@@ -21,7 +21,6 @@ public class EnemyManager : MonoBehaviour
     // 적 스폰 위치
     public Vector3 spawnValues;
 
-
     [Header("오브젝트 풀 설정")]
     // 적 공장
     public GameObject[] enemyFactory;
@@ -29,6 +28,9 @@ public class EnemyManager : MonoBehaviour
     public int poolSize; 
     //오브젝트 풀 리스트 배열
     public List<GameObject>[] enemyObjectPool;
+
+    public GameObject boss;
+    private PlayerMove playerMove;
 
 
     private void Update()
@@ -57,10 +59,16 @@ public class EnemyManager : MonoBehaviour
                 GameObject enemy = Instantiate(enemyFactory[i]);
                 // 에너미를 오브젝트 풀 리스트에 추가 한다.
                 enemyObjectPool[i].Add(enemy);
-                // 오브젝트를 비활성화 시킨다.
+                // 오브젝트 비활성화 시킨다.
                 enemy.SetActive(false);
+                
+                // 보스 몹 비활성화 
+                boss.SetActive(false);
+
             }
         }
+
+        playerMove = FindObjectOfType<PlayerMove>();
 
         // 코루틴 시작
         StartCoroutine(SpawnEnemiesRoutine());
@@ -103,14 +111,7 @@ public class EnemyManager : MonoBehaviour
                 SpawnEnemyFromPool(currentEnemyIndex);
             }
 
-            Debug.Log($"{currentEnemyIndex + 1}번째 몬스터 패턴으로 변경되었습니다.");
-
-            // 게임 상태를 확인
-            if (GameManager.Instance.gState != GameManager.GameState.Run)
-            {
-                // break를 사용해 최상위 while(true) 루프로 돌아갑니다.
-                break;
-            }
+            Debug.Log($"스테이지 2가 시작됩니다.");
 
             //  --- 대기 후, 두 번째 몬스터가 섞여 스폰되는 구간 ---
             yield return new WaitForSeconds(stageDelayTime);
@@ -150,21 +151,27 @@ public class EnemyManager : MonoBehaviour
             }
 
             //  ---대기 후, 보스 몬스터 등장 두둥 ---
+            Debug.Log($"보스 등장!");
+            boss.SetActive(true);
+            playerMove.BossOpening();
+
             yield return new WaitForSeconds(stageDelayTime);
             patternChangeTimer = 0f;
 
-            while(patternChangeTimer < stageTime)
-            {
+            //while (patternChangeTimer < bossStageTime)
+            //{
 
-            }
+            //}
             
+            Debug.Log($"모든 몬스터 패턴이 종료되었습니다.");
 
+            GameManager.Instance.gState = GameManager.GameState.Ready;
 
-
-
-
-                Debug.Log($"모든 몬스터 패턴이 종료되었습니다.");
-
+            if (GameManager.Instance.gState != GameManager.GameState.Run)
+            {
+                // break를 사용해 최상위 while(true) 루프로 돌아갑니다.
+                break;
+            }
         }
     }
 

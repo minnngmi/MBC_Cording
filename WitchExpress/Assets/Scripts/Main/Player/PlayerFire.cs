@@ -16,13 +16,14 @@ public class PlayerFire : MonoBehaviour
     //오브젝트 풀 리스트 생성
     public List<GameObject> bulletObjectPool;
 
+    [Header("발사 관련 설정")]
     //총구 위치
     public GameObject firePosition;
 
     // 공격 모션
     public Animator witchAttack;
 
-    [Header("특수 스킬 설정")]
+    [Header("특수 스킬 관련 설정")]
     // 스킬에 필요한 새로운 변수들
     public VideoPlayer skillVideoPlayer; // 동영상 재생을 위한 VideoPlayer 컴포넌트
     public GameObject skillVideoUIObject;  // Raw Image를 담고 있는 UI 오브젝트 변수
