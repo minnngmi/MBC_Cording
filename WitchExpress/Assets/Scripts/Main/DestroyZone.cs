@@ -46,6 +46,11 @@ public class DestroyZone : MonoBehaviour
             return;
         }
 
+        else if (other.CompareTag("Boss"))
+        {
+            return;
+        }
+
         else
         {
             other.gameObject.SetActive(false);

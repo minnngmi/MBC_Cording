@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
     {
         Ready,
         Run,
-        GameOver
+        GameOver,
+        Ending
     }
 
     // 현재의 게임 상태 변수
@@ -212,11 +213,11 @@ public class GameManager : MonoBehaviour
             // 포션 사용 횟수 증가 및 PosionCandy 값 업데이트
             potionUsedCount++;
 
-            if (potionUsedCount <= 3)
+            if (potionUsedCount < 3)
             {
                 PosionCandy = 10;
             }
-            else if (potionUsedCount <= 8) // 3번 사용 이후부터 8번까지 (총 5번)
+            else if (potionUsedCount < 8) // 3번 사용 이후부터 8번까지 (총 5번)
             {
                 PosionCandy = 15;
 

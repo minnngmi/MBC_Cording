@@ -12,7 +12,6 @@ public class EffectManager : MonoBehaviour
     private DepthOfField depthOfField;
 
 
-
     private void Start()
     {
         // volume에서 ColorGrading 설정을 가져옵니다.
@@ -58,6 +57,4 @@ public class EffectManager : MonoBehaviour
             depthOfField.enabled.value = !depthOfField.enabled.value;
         }
     }
-
-
 }

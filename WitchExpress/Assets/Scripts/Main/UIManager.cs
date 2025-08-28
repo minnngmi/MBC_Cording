@@ -7,6 +7,7 @@ using UnityEngine.UI; // UI 사용을 위해 추가
 
 public class UIManager : MonoBehaviour
 {
+    [Header("플레이어 상태 정보")]
     // 슬라이더 연결
     public Slider hpSlider; // HP 슬라이더 
     public Slider mpSlider; // MP 슬라이더 
@@ -17,10 +18,12 @@ public class UIManager : MonoBehaviour
     private Color normalColor = Color.gray; // MP가 꽉 차지 않았을 때
     public Color fullMPColor; // 꽉 찼을 때
 
+    [Header("플레이어 스킬 정보")]
     // 스킬 버튼과 이펙트 게임오브젝트 연결
     public GameObject skillBtn;
     public GameObject skillBtnEffect;
 
+    [Header("사탕 포션 정보")]
     //사탕, 포션 UI text 연결
     public Text candyTxt;
     public Text posionTxt;

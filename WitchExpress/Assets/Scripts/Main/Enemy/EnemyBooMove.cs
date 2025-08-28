@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class EnemyBooMove : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class EnemyBooMove : MonoBehaviour
     public float fireDelay;
 
 
-
     private void Awake()
     {
         // ⭐ Awake() 함수는 Start()보다 먼저 호출됩니다.
@@ -41,18 +41,14 @@ public class EnemyBooMove : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnEnable()
     {
         // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
         if (GameManager.Instance.gState != GameManager.GameState.Run)
         {
             return;
         }
-    }
 
-
-    private void OnEnable()
-    {
         // 몬스터가 활성화될 때 이펙트를 즉시 비활성화합니다.
         if (lightningEffect != null)
         {
@@ -93,6 +89,12 @@ public class EnemyBooMove : MonoBehaviour
         // 몬스터가 비활성화되기 전까지 이 코루틴은 계속 실행됩니다.
         while (true)
         {
+            // GameManager의 상태가 'Run'이 될 때까지 기다립니다.
+            while (GameManager.Instance.gState != GameState.Run)
+            {
+                yield return null;
+
+            }
             FireLightningBolts();
             yield return new WaitForSeconds(fireInterval);
         }

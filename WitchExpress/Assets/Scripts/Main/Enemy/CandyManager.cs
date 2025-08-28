@@ -9,11 +9,17 @@ public class CandyManager : MonoBehaviour
     // 캔디 공장(캔디 프리팹들을 담는 배열) 생성
     public GameObject[] candyFactory;
 
-
-
+ 
     // 캔디 생성에 관련된 모든 기능을 담당하는 메서드
     public void SpawnRandomCandy()
     {
+        // 게임 상태가 'Run'일 때만 메서드 내용을 실행
+        if (GameManager.Instance.gState != GameManager.GameState.Run)
+        {
+            // 상태가 Run이 아니면 즉시 메서드를 종료합니다.
+            return;
+        }
+
         // 1. 몇 개를 만들지 확률로 결정 (40% 확률로 2개, 나머지는 1개)
         int rand = Random.Range(0, 10);
         int spawnCount = (rand < 4) ? 2 : 1;

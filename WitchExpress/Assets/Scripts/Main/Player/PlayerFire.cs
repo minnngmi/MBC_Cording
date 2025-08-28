@@ -98,8 +98,6 @@ public class PlayerFire : MonoBehaviour
         {
             return;
         }
-
-        // 스킬 코루틴이 실행 중이 아닐 때만 일반 공격과 스킬 입력을 받음
        
             // 일반 공격 로직
             // 목표: 사용자가 발사 버튼을 누르면 총알을 발사하고 싶다.

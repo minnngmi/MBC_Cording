@@ -46,12 +46,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
-        if (GameManager.Instance.gState != GameManager.GameState.Run)
-        {
-            return;
-        }
-
         //transform.position += dir * speed * Time.deltaTime;
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
