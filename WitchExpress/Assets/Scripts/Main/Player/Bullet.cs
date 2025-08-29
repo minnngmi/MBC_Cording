@@ -9,17 +9,17 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½.
+        // 1. ¹æÇâÀ» ±¸ÇÑ´Ù.
         Vector3 dir = Vector3.forward;
 
-        // 2. ï¿½Ìµï¿½ï¿½Ï°ï¿½ ï¿½Í´ï¿½. ï¿½ï¿½ï¿½ï¿½ P = P0 + vt
+        // 2. ÀÌµ¿ÇÏ°í ½Í´Ù. °ø½Ä P = P0 + vt
         transform.position += dir * speed * Time.deltaTime;
     }
 
-    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ñ¾Ë¿ï¿½ ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ÇÃ·¹ÀÌ¾îÀÇ ÃÑ¾Ë¿¡ ¸Â¾ÒÀ»½Ã
     private void OnCollisionEnter(Collision other)
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¡ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½Ñ´ï¿½.
+        // °ÔÀÓ »óÅÂ°¡ ¡®°ÔÀÓ Áß¡¯ »óÅÂÀÏ ¶§¸¸ Á¶ÀÛÇÒ ¼ö ÀÖ°Ô ÇÑ´Ù.
         if (GameManager.Instance.gState != GameManager.GameState.Run)
         {
             return;
@@ -27,32 +27,32 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.CompareTag("Enemy"))
         {
-            // 1. ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // 1. Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®ÀÇ Å¬·¡½º ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-            // 2. ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ (Enemyï¿½ï¿½ Ã³ï¿½ï¿½)
-            enemy.ExplosionEnemy(transform.position); // ï¿½ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ï¾î³³ï¿½Ï´ï¿½.
+            // 2. Æø¹ß È¿°ú ¸Þ¼­µå È£Ãâ (Enemy°¡ Ã³¸®)
+            enemy.ExplosionEnemy(transform.position); // ÀÌ ¾È¿¡¼­ ºñÈ°¼ºÈ­°¡ ÀÏ¾î³³´Ï´Ù.
 
-            // GameManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³Ä¡ Ä«ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // GameManager¸¦ ÅëÇØ Àû Ã³Ä¡ Ä«¿îÆ®¸¦ Áõ°¡
             GameManager.Instance.IncreaseEnemyKills();
 
-            // 3. Enemyï¿½ï¿½ CandyManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ Äµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+            // 3. EnemyÀÇ CandyManager¸¦ °¡Á®¿Í¼­ Äµµð »ý¼º ¸Þ¼­µå È£Ãâ
             CandyManager candyManager = other.gameObject.GetComponent<CandyManager>();
             if (candyManager != null)
             {
                 candyManager.SpawnRandomCandy();
             }
 
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+            // ¸ÂÀº »ó´ë ºñÈ°¼ºÈ­
             other.gameObject.SetActive(false);
 
-            // EnemyManager ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // EnemyManager °´Ã¼ ¾ò¾î¿À±â
             EnemyManager em =
                 GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 
-            // ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ È®ï¿½ï¿½
+            // ºÎµúÈù ÀûÀÇ °íÀ¯³Ñ¹ö È®ÀÎ
             int enemyIdx = enemy.enemyIdx;
-            // ï¿½Ø´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç® ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
+            // ÇØ´ç Àû ¿ÀºêÁ§Æ® Ç® ¸®½ºÆ®¿¡ Ãß°¡
             em.enemyObjectPool[enemyIdx].Add(other.gameObject);
         }
 
@@ -61,15 +61,15 @@ public class Bullet : MonoBehaviour
             BossHP bossHp =
             GameObject.Find("EnemyBoss").GetComponent<BossHP>();
             bossHp.BossTakeDamage(damage);
-            Debug.Log(" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Ò½ï¿½ï¿½Ï´ï¿½.");
+            Debug.Log(" °ø°ÝÀ» ¹Þ¾Ò½À´Ï´Ù.");
         }
 
-        // ï¿½Ú½ï¿½(ï¿½Ñ¾ï¿½)ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        // ÀÚ½Å(ÃÑ¾Ë)µµ ºñÈ°¼ºÈ­
         gameObject.SetActive(false);
-        // PlayerFire ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // PlayerFire °´Ã¼ ¾ò¾î¿À±â
         PlayerFire player =
             GameObject.Find("Player").GetComponent<PlayerFire>();
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç® ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ß°ï¿½
+        // ¿ÀºêÁ§Æ® Ç® ¸®½ºÆ®¿¡ ÃÑ¾Ë Ãß°¡
         player.bulletObjectPool.Add(gameObject);
     }
 }
