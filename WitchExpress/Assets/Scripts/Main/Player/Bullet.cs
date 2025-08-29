@@ -58,8 +58,7 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.CompareTag("Boss"))
         {
-            BossHP bossHp =
-            GameObject.Find("EnemyBoss").GetComponent<BossHP>();
+            BossHP bossHp = other.gameObject.GetComponent<BossHP>();
             bossHp.BossTakeDamage(damage);
             Debug.Log(" 공격을 받았습니다.");
         }

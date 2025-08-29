@@ -3109,7 +3109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f123c0d13e0fd143adf7270bf690e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageTime: 5
+  stageTime: 15
   stageDelayTime: 3
   bossDelayTime: 10
   bossStageTime: 60
@@ -4111,7 +4111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1638903380605311237, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.03
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1638903380605311237, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: m_LocalRotation.w

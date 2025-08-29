@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
         OnMPChanged?.Invoke(playerMP);
     }
 
-    // 5) MP를 감소시키는 메서드
+    // 5) (스킬 사용시) MP를 감소시키는 메서드
     public void DecreasePlayerMP(int amount)
     {
         playerMP -= amount;
