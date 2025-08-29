@@ -40,24 +40,4 @@ public class BossHP : MonoBehaviour
             bossHP = 0;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // 충돌한 오브젝트가 "Player" 태그를 가지고 있는지 확인합니다.
-        if (other.CompareTag("Bullet"))
-        {
-            // 컴포넌트를 찾아옵니다
-            Bullet bullet = other.GetComponent<Bullet>();
-            BossTakeDamage(bullet.damage);
-
-            //총알 비활성화
-            bullet.gameObject.SetActive(false);
-            // PlayerFire 객체 얻어오기
-            PlayerFire player =
-                GameObject.Find("Player").GetComponent<PlayerFire>();
-            // 오브젝트 풀 리스트에 총알 추가
-            player.bulletObjectPool.Add(gameObject);
-        }
-    }
-
 }
