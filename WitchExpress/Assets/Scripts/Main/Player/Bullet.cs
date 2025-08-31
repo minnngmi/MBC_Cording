@@ -71,4 +71,6 @@ public class Bullet : MonoBehaviour
         // 오브젝트 풀 리스트에 총알 추가
         player.bulletObjectPool.Add(gameObject);
     }
+
+
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static GameManager;
 
 public class EnemyManager : MonoBehaviour
@@ -32,6 +33,7 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject>[] enemyObjectPool;
 
     public GameObject boss;
+    public Slider bossHpSlider;
     private PlayerMove playerMove;
 
 
@@ -58,7 +60,8 @@ public class EnemyManager : MonoBehaviour
         }
         // 보스 몹 비활성화 
         boss.SetActive(false);
-        
+        bossHpSlider.gameObject.SetActive(false);
+
 
         // 게임 흐름을 제어하는 메인 코루틴을 시작합니다.
         StartCoroutine(GameFlowRoutine());
@@ -85,6 +88,7 @@ public class EnemyManager : MonoBehaviour
         // 보스 스폰 코루틴이 끝날 때까지 기다립니다.
         yield return StartCoroutine(SpawnBossRoutine());
 
+
         Debug.Log("모든 스테이지 완료! 게임 종료.");
         // 모든 스테이지가 끝나면 게임 상태를 Ending으로 변경합니다.
         GameManager.Instance.gState = GameState.Ending;
@@ -93,6 +97,7 @@ public class EnemyManager : MonoBehaviour
     //몬스터 등장 코루틴 (스테이지 1)
     IEnumerator SpawnEnemiesRoutine()
     {
+        yield return new WaitForSeconds(stageDelayTime);
         // 시간 타이머
         float patternChangeTimer = 0f;
         // 현재 스폰할 적의 인덱스 (enemyFactory의 순서)
@@ -163,6 +168,7 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(bossDelayTime);
         GameManager.Instance.gState = GameManager.GameState.Run;
+        bossHpSlider.gameObject.SetActive(true);
 
         // 시간 타이머
         float patternChangeTimer = 0f;
