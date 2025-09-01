@@ -59,7 +59,6 @@ public class UImanager : MonoBehaviour
             ApplySprite(buttons[buttonIndex], normalSprites[buttonIndex]);
 
             buttonIndex++;
-            Debug.Log("아래");
             if (buttonIndex >= buttons.Length)
             {
                 buttonIndex = 0;
@@ -91,7 +90,6 @@ public class UImanager : MonoBehaviour
     {
         yield return new WaitForSeconds(4.5f);
         btnImg.SetActive(true);
-        Debug.Log("버튼 활성화");
 
         // 첫번째 버튼이 선택됨
         if (buttons.Length > 0)
@@ -119,5 +117,10 @@ public class UImanager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("StoryMenu");
+    }
+
+    public void Ending()
+    {
+        SceneManager.LoadScene("Ending");
     }
 }

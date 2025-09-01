@@ -40,7 +40,7 @@ public class StoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             StopAllCoroutines();
-            StartCoroutine(MainScene());
+            StartCoroutine(Loading());
         }
     }
 
@@ -84,15 +84,16 @@ public class StoryManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(MainScene());
+            StartCoroutine(Loading());
         }
     }
 
-    IEnumerator MainScene()
+    IEnumerator Loading()
     {
-        yield return new WaitForSeconds(1.0f);
         // 더 이상 이미지가 없으면 메인 게임 씬으로 이동합니다.
-        SceneManager.LoadScene("Main");
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Loading");
+
     }
 
 }
