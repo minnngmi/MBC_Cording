@@ -6,53 +6,53 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UImanager : MonoBehaviour
+public class BtnManager : MonoBehaviour
 {
-    // 버튼 이미지 전체 오브젝트
-    public GameObject btnImg;
-
     // 버튼들을 배열로 순서 관리
     public Button[] buttons;
     private int buttonIndex = 0;
 
     // 버튼 하이라이트 효과를 위한 스프라이트들
-    public Sprite[] normalSprites;
-    public Sprite[] highlightedSprites;
-    public Sprite[] pressedSprites;
+    public Sprite normalSprites;
+    public Sprite highlightedSprites;
+    public Sprite pressedSprites;
 
     // 효과음 재생을 위한 AudioSource
     private AudioSource audioSource;
     // 재생할 효과음 클립
     public AudioClip buttonClickSound;
 
-    // 옵션창 애니메이터 변수
-    public Animator OptionAnim;
-
-
-    void Start()
+    private void Start()
     {
-        StartCoroutine(ButtonOn());
-        btnImg.SetActive(false);
-
+        // 첫번째 버튼이 선택됨
+        if (buttons.Length > 0)
+        {
+            EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
+            // 초기 하이라이트 상태를 적용합니다.
+            ApplySprite(buttons[0], highlightedSprites);
+        }
         // 효과음 재생을 위한 AudioSource 컴포넌트를 가져오거나 추가합니다.
         audioSource = GetComponent<AudioSource>();
     }
 
-
     private void Update()
     {
-        // 버튼 이미지가 활성화 되었을때만 키보드 탐색 허용
-        if (!btnImg.activeInHierarchy)
-            return;
+        // ESC 버튼 입력 감지
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoMenu();
+        }
 
-        // 위 방향키 입력 감지
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        // 왼쪽 방향키 입력 감지
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 효과음 재생
             PlaySound();
 
             // 이전 버튼의 스프라이트 해제
-            ApplySprite(buttons[buttonIndex], normalSprites[buttonIndex]);
+            ApplySprite(buttons[buttonIndex], normalSprites);
+
 
             buttonIndex--;
             if (buttonIndex < 0)
@@ -61,8 +61,27 @@ public class UImanager : MonoBehaviour
             }
             // 현재 선택된 버튼 변경
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
-            ApplySprite(buttons[buttonIndex], highlightedSprites[buttonIndex]);
+            ApplySprite(buttons[buttonIndex], highlightedSprites);
 
+        }
+
+        // 오른쪽 방향키 입력 감지
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            // 효과음 재생
+            PlaySound();
+
+            // 이전 버튼의 스프라이트 해제
+            ApplySprite(buttons[buttonIndex], normalSprites);
+
+            buttonIndex++;
+            if (buttonIndex >= buttons.Length)
+            {
+                buttonIndex = 0;
+            }
+            // 현재 선택된 버튼 변경
+            EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
+            ApplySprite(buttons[buttonIndex], highlightedSprites);
         }
 
         // 아래 방향키 입력 감지
@@ -72,17 +91,39 @@ public class UImanager : MonoBehaviour
             PlaySound();
 
             // 이전 버튼의 스프라이트 해제
-            ApplySprite(buttons[buttonIndex], normalSprites[buttonIndex]);
+            ApplySprite(buttons[buttonIndex], normalSprites);
 
-            buttonIndex++;
+            buttonIndex = buttonIndex + 2;
             if (buttonIndex >= buttons.Length)
             {
                 buttonIndex = 0;
             }
             // 현재 선택된 버튼 변경
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
-            ApplySprite(buttons[buttonIndex], highlightedSprites[buttonIndex]);
+            ApplySprite(buttons[buttonIndex], highlightedSprites);
+        }
 
+        // 위 방향키 입력 감지
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            // 효과음 재생
+            PlaySound();
+
+            // 이전 버튼의 스프라이트 해제
+            ApplySprite(buttons[buttonIndex], normalSprites);
+
+            buttonIndex = buttonIndex - 2;
+
+            if (buttonIndex < 0)
+            {
+                buttonIndex = buttons.Length - 1;
+            }
+
+    
+
+            // 현재 선택된 버튼 변경
+            EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
+            ApplySprite(buttons[buttonIndex], highlightedSprites);
         }
 
         // 스페이스바 입력 감지
@@ -100,21 +141,6 @@ public class UImanager : MonoBehaviour
         }
     }
 
-    // 버튼 활성화 메서드
-    IEnumerator ButtonOn()
-    {
-        yield return new WaitForSeconds(4.5f);
-        btnImg.SetActive(true);
-
-        // 첫번째 버튼이 선택됨
-        if (buttons.Length > 0)
-        {
-            EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
-            // 초기 하이라이트 상태를 적용합니다.
-            ApplySprite(buttons[buttonIndex], highlightedSprites[buttonIndex]);
-
-        }
-    }
 
     // 버튼의 스프라이트 변경 메서드
     private void ApplySprite(Button button, Sprite sprite)
@@ -135,21 +161,8 @@ public class UImanager : MonoBehaviour
         }
     }
 
-
-    // 스토리 씬으로 버튼 클릭 시 이동
-    public void StartGame()
+    public void GoMenu()
     {
-        SceneManager.LoadScene("StoryMenu");
-    }
-
-    // 엔딩 앨범 씬으로 버튼 클릭 시 이동
-    public void Ending()
-    {
-        SceneManager.LoadScene("Ending");
-    }
-
-    public void Option()
-    {
-        OptionAnim.SetTrigger("OptionOnOFF");
+        SceneManager.LoadScene("Menu");
     }
 }
