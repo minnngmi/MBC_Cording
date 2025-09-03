@@ -7,6 +7,8 @@ using static GameManager;
 
 public class EnemyManager : MonoBehaviour
 {
+    public GameObject opTxt;
+
     [Header("스테이지 진행 시간 설정")]
     // 스테이지 당 몬스터 등장 시간 (30)
     public float stageTime;
@@ -37,8 +39,11 @@ public class EnemyManager : MonoBehaviour
     private PlayerMove playerMove;
 
 
+
     private void Start()
     {
+        opTxt.SetActive(false);
+
         //오브젝트풀 리스트를 에너미를 담을 수 있는 크기의 배열로 만들어준다.
         enemyObjectPool = new List<GameObject>[enemyFactory.Length];
 
@@ -81,6 +86,7 @@ public class EnemyManager : MonoBehaviour
         yield return StartCoroutine(SpawnEnemiesRoutine());
 
         Debug.Log("스테이지 2 몬스터 스폰 시작.");
+        opTxt.SetActive(true);
         // 두 번째 몬스터 스폰 코루틴이 끝날 때까지 기다립니다.
         yield return StartCoroutine(SpawnBooRoutine());
 

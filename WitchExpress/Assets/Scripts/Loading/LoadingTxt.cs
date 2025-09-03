@@ -33,11 +33,9 @@ public class LoadingTxt : MonoBehaviour
         while (elapsedTime < minWaitTime)
         {
             elapsedTime += Time.deltaTime;
-            Debug.Log(elapsedTime);
 
             if (loadingText != null)
             {
-                
                 loadingText.text = "Now Loading " + dots[dotIndex];
                 dotIndex = (dotIndex + 1) % dots.Length;
             }

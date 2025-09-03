@@ -22,8 +22,13 @@ public class BtnManager : MonoBehaviour
     // 재생할 효과음 클립
     public AudioClip buttonClickSound;
 
+    // 2번째 엔딩 사진 이미지
+    public GameObject btn02BG;
+
     private void Start()
     {
+        btn02BG.SetActive(false);
+
         // 첫번째 버튼이 선택됨
         if (buttons.Length > 0)
         {
@@ -46,6 +51,7 @@ public class BtnManager : MonoBehaviour
             // 이전 버튼의 스프라이트 해제
             ApplySprite(buttons[buttonIndex], normalSprites);
 
+
             buttonIndex--;
             if (buttonIndex < 0)
             {
@@ -54,6 +60,7 @@ public class BtnManager : MonoBehaviour
             // 현재 선택된 버튼 변경
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
             ApplySprite(buttons[buttonIndex], highlightedSprites);
+
         }
 
         // 오른쪽 방향키 입력 감지
@@ -130,6 +137,7 @@ public class BtnManager : MonoBehaviour
         }
     }
 
+
     // 버튼의 스프라이트 변경 메서드
     private void ApplySprite(Button button, Sprite sprite)
     {
@@ -148,4 +156,11 @@ public class BtnManager : MonoBehaviour
             audioSource.PlayOneShot(buttonClickSound);
         }
     }
+
+    // Button02 작동 메서드
+    public void Btn02()
+    {
+        btn02BG.SetActive(!btn02BG.activeSelf);
+    }
+
 }

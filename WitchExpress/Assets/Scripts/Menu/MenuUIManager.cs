@@ -36,7 +36,6 @@ public class MenuUIManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(ButtonOn());
-
         btnImg.SetActive(false); 
 
         // 효과음 재생을 위한 AudioSource 컴포넌트를 가져오거나 추가합니다.
@@ -110,15 +109,6 @@ public class MenuUIManager : MonoBehaviour
         // ESC 키 입력 감지
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // 현재 "OptionOnOFF" 파라미터의 값 가져오기
-            bool isOptionOn = OptionAnim.GetBool("OptionOn");
-
-            // 만약 현재 값이 true이면, false로 변경
-            if (isOptionOn)
-            {
-                OptionAnim.SetBool("OptionOn", false);
-            }
-
             // 만약 씬이 로드된 상태라면, 씬 언로드
             if (isSceneLoaded)
             {
@@ -185,6 +175,6 @@ public class MenuUIManager : MonoBehaviour
     // 버튼 클릭 시 옵션창 나타나기
     public void Option()
     {
-        OptionAnim.SetBool("OptionOn", true);
+        OptionAnim.SetTrigger("OptionOnOff");
     }
 }
