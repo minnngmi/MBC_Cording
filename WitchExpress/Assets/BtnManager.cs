@@ -37,13 +37,6 @@ public class BtnManager : MonoBehaviour
 
     private void Update()
     {
-        // ESC 버튼 입력 감지
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoMenu();
-        }
-
-
         // 왼쪽 방향키 입력 감지
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -159,10 +152,5 @@ public class BtnManager : MonoBehaviour
         {
             audioSource.PlayOneShot(buttonClickSound);
         }
-    }
-
-    public void GoMenu()
-    {
-        SceneManager.LoadScene("Menu");
     }
 }
