@@ -46,7 +46,6 @@ public class BtnManager : MonoBehaviour
             // 이전 버튼의 스프라이트 해제
             ApplySprite(buttons[buttonIndex], normalSprites);
 
-
             buttonIndex--;
             if (buttonIndex < 0)
             {
@@ -55,7 +54,6 @@ public class BtnManager : MonoBehaviour
             // 현재 선택된 버튼 변경
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
             ApplySprite(buttons[buttonIndex], highlightedSprites);
-
         }
 
         // 오른쪽 방향키 입력 감지
@@ -112,8 +110,6 @@ public class BtnManager : MonoBehaviour
                 buttonIndex = buttons.Length - 1;
             }
 
-    
-
             // 현재 선택된 버튼 변경
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
             ApplySprite(buttons[buttonIndex], highlightedSprites);
@@ -133,7 +129,6 @@ public class BtnManager : MonoBehaviour
             }
         }
     }
-
 
     // 버튼의 스프라이트 변경 메서드
     private void ApplySprite(Button button, Sprite sprite)

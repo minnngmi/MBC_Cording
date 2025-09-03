@@ -34,13 +34,24 @@ public class StoryManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             currentImgIndex++;
+            // 다음 장면으로
             NextImage();
         }
 
+        // 엔터키 입력 감지
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             StopAllCoroutines();
+            // 게임 시작
             StartCoroutine(Loading());
+        }
+
+        // ESC 키 입력 감지
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopAllCoroutines();
+            // 메인 메뉴씬으로 
+            SceneManager.LoadScene("Menu");
         }
     }
 
@@ -91,9 +102,8 @@ public class StoryManager : MonoBehaviour
     IEnumerator Loading()
     {
         // 더 이상 이미지가 없으면 메인 게임 씬으로 이동합니다.
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("Loading");
-
     }
 
 }
