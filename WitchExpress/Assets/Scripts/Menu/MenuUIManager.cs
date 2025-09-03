@@ -6,8 +6,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UImanager : MonoBehaviour
+public class MenuUIManager : MonoSingleton<MenuUIManager>
 {
+    public GameObject MenuBG;
+    
+
     // 버튼 이미지 전체 오브젝트
     public GameObject btnImg;
 
@@ -27,12 +30,34 @@ public class UImanager : MonoBehaviour
 
     // 옵션창 애니메이터 변수
     public Animator OptionAnim;
+    public Animator TitleAnim;
 
+    // ESC 키로 닫을 수 있도록 갤러리(ending) 씬이 활성화된 상태인지 확인하는 변수
+    private bool isSceneLoaded = false;
+    private bool sceneAlreadyLoad = false;
+ 
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Debug.Log("SceneStart");
+
+        MenuBG.TryGetComponent(out TitleAnim);
+        TitleAnim.SetBool("MenuBGOnOff", true);
+    }
+
+    private void SetAnimBool()
+    {
+        sceneAlreadyLoad = true;
+    }
 
     void Start()
     {
-        StartCoroutine(ButtonOn());
-        btnImg.SetActive(false);
+        if (!sceneAlreadyLoad) StartCoroutine(ButtonOn());
+        MenuBG.SetActive(true);
+        btnImg.SetActive(false); 
+
 
         // 효과음 재생을 위한 AudioSource 컴포넌트를 가져오거나 추가합니다.
         audioSource = GetComponent<AudioSource>();
@@ -98,13 +123,23 @@ public class UImanager : MonoBehaviour
                 }
             }
         }
+
+        // 씬이 로드된 상태에서 ESC 키를 누르면
+        if (isSceneLoaded && Input.GetKeyDown(KeyCode.Escape))
+        {
+            // 씬을 언로드(닫기)합니다.
+            SceneManager.UnloadSceneAsync("Ending");
+            isSceneLoaded = false;
+        }
     }
 
     // 버튼 활성화 메서드
     IEnumerator ButtonOn()
     {
-        yield return new WaitForSeconds(4.5f);
-        btnImg.SetActive(true);
+           yield return new WaitForSeconds(4.5f);
+            
+            btnImg.SetActive(true);
+        
 
         // 첫번째 버튼이 선택됨
         if (buttons.Length > 0)
@@ -112,7 +147,6 @@ public class UImanager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(buttons[buttonIndex].gameObject);
             // 초기 하이라이트 상태를 적용합니다.
             ApplySprite(buttons[buttonIndex], highlightedSprites[buttonIndex]);
-
         }
     }
 
@@ -145,9 +179,18 @@ public class UImanager : MonoBehaviour
     // 엔딩 앨범 씬으로 버튼 클릭 시 이동
     public void Ending()
     {
-        SceneManager.LoadScene("Ending");
+        if (!isSceneLoaded)
+        {
+            //  기존 씬을 파괴하지 않고 "Ending" 씬을 추가 로드
+            SceneManager.LoadSceneAsync("Ending", LoadSceneMode.Additive);
+            SetAnimBool();
+            isSceneLoaded = true;
+        }
+
+        //SceneManager.LoadScene("Ending");
     }
 
+    // 옵션 창이 버튼 클릭 시 on,off됨
     public void Option()
     {
         OptionAnim.SetTrigger("OptionOnOFF");
