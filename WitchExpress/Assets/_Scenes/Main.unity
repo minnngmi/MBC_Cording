@@ -3346,7 +3346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   opTxt: {fileID: 1991711787}
   stageTime: 15
-  stageDelayTime: 8
+  stageDelayTime: 15
   bossDelayTime: 10
   bossStageTime: 60
   minTime: 0.2
@@ -4345,7 +4345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1991711788
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4355,7 +4355,7 @@ RectTransform:
   m_GameObject: {fileID: 1991711787}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.81, y: 0.81, z: 0.81}
+  m_LocalScale: {x: 0.80999994, y: 0.80999994, z: 0.80999994}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 414724337}
@@ -4876,7 +4876,7 @@ PrefabInstance:
       objectReference: {fileID: 414724336}
     - target: {fileID: 6273426403758382344, guid: 59b16044b7b4534479ba5ee549b5d882, type: 3}
       propertyPath: openingTime
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6273426403758382344, guid: 59b16044b7b4534479ba5ee549b5d882, type: 3}
       propertyPath: bossOpeningTime
