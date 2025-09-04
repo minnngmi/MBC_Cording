@@ -181,6 +181,7 @@ public class EnemyManager : MonoBehaviour
         Debug.Log($"보스 등장!");
         boss.SetActive(true);
 
+
         yield return new WaitForSeconds(bossDelayTime);
         GameManager.Instance.gState = GameManager.GameState.Run;
 
