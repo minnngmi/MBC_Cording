@@ -8,6 +8,7 @@ using static GameManager;
 public class EnemyManager : MonoBehaviour
 {
     public GameObject opTxt;
+    public AudioSource mainBGM01;
 
     [Header("스테이지 진행 시간 설정")]
     // 스테이지 당 몬스터 등장 시간 (30)
@@ -34,15 +35,20 @@ public class EnemyManager : MonoBehaviour
     //오브젝트 풀 리스트 배열
     public List<GameObject>[] enemyObjectPool;
 
+    [Header("보스 설정")]
     public GameObject boss;
     public Slider bossHpSlider;
     private PlayerMove playerMove;
+    public AudioSource bossLaughing;
+    public AudioSource mainBGM02;   // 보스전 음악
+    public MainBGM_FadeOut bgmFader; // 음악 fade 효과
 
 
 
     private void Start()
     {
         opTxt.SetActive(false);
+        mainBGM01.Play();
 
         //오브젝트풀 리스트를 에너미를 담을 수 있는 크기의 배열로 만들어준다.
         enemyObjectPool = new List<GameObject>[enemyFactory.Length];
@@ -169,12 +175,18 @@ public class EnemyManager : MonoBehaviour
 
         // 플레이어 캐릭터를 이동시키는 코루틴이 끝날 때까지 기다립니다.
         yield return StartCoroutine(playerMove.BossOpening());
+        // BGM01 볼륨 페이드 아웃 메서드 호출
+        bgmFader.FadeOutBGM(5f);
 
         Debug.Log($"보스 등장!");
         boss.SetActive(true);
 
         yield return new WaitForSeconds(bossDelayTime);
         GameManager.Instance.gState = GameManager.GameState.Run;
+
+        // 보스전 음악 재생
+        mainBGM02.Play();
+        // 보스 HP UI 활성화
         bossHpSlider.gameObject.SetActive(true);
 
         // 시간 타이머
@@ -182,6 +194,7 @@ public class EnemyManager : MonoBehaviour
 
         while (patternChangeTimer < bossStageTime)
         {
+
             Debug.Log($"보스가 공격중입니다.");
             // 여기에 보스의 공격 로직을 추가
             // 예를 들어, yield return new WaitForSeconds(1.0f);
