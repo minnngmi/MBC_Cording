@@ -22,14 +22,34 @@ public class BossHP : MonoBehaviour
     // HP UI text 연결
     public Text bossHpTxt;
 
+    private Rigidbody rb;
+
     private void Start()
     {
         bossHpTxt.text = $"{bossHP} / {bossMaxHP}";
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
+        if (GameManager.Instance.gState != GameManager.GameState.Run)
+        {
+            Debug.Log("게임 중이 아닙니다");
+            return;
+        }
+
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            Bullet bullet = other.gameObject.GetComponent<Bullet>();
+            int playerDamage = bullet.damage;
+            Debug.Log("데미지 확인 : " + playerDamage);
+            BossTakeDamage(playerDamage);
+        }
     }
 
     public void BossTakeDamage(int amount)
     {
-        Debug.Log(" 30의 데미지를 받았습니다.");
         bossHP -= amount;
         bossHpTxt.text = $"{bossHP} / {bossMaxHP}";
         GameObject effectInstance = Instantiate(damageEffect, transform.position, Quaternion.identity);

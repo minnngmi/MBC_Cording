@@ -136,6 +136,10 @@ public class GameManager : MonoBehaviour
         {
             playerHP = 0;
             Debug.Log("게임 오버!");
+
+            // 오프닝이 끝났으므로 GameManager의 상태를 '게임오버'로 변경합니다.
+            GameManager.Instance.gState = GameManager.GameState.GameOver;
+
             // TODO: 게임 오버 처리 (화면 전환 등)
         }
     }

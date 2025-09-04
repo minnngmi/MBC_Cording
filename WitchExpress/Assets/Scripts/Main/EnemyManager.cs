@@ -180,13 +180,14 @@ public class EnemyManager : MonoBehaviour
 
         Debug.Log($"보스 등장!");
         boss.SetActive(true);
-
-
+        // (보스 애니메이션 작동중)
         yield return new WaitForSeconds(bossDelayTime);
+
         GameManager.Instance.gState = GameManager.GameState.Run;
 
         // 보스전 음악 재생
         mainBGM02.Play();
+
         // 보스 HP UI 활성화
         bossHpSlider.gameObject.SetActive(true);
 
@@ -196,7 +197,7 @@ public class EnemyManager : MonoBehaviour
         while (patternChangeTimer < bossStageTime)
         {
 
-            Debug.Log($"보스가 공격중입니다.");
+            
             // 여기에 보스의 공격 로직을 추가
             // 예를 들어, yield return new WaitForSeconds(1.0f);
             yield return null;

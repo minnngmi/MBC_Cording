@@ -117,8 +117,14 @@ public class PlayerMove : MonoBehaviour
     // 보스 등장 시퀀스를 처리하는 코루틴
     public IEnumerator BossOpening()
     {
-        Debug.Log($"오프닝 진행중!");
+        Debug.Log($"보스 오프닝 진행중!");
         GameManager.Instance.gState = GameManager.GameState.Ready;
+
+
+        PlayerFire playerFire = GameObject.Find("Player").GetComponent<PlayerFire>();
+        GameObject skillEffect = playerFire.skillEffectObject;
+        skillEffect.SetActive(false);
+
 
         // 캐릭터의 시작 위치와 목표 위치를 설정합니다.
         Vector3 startPos = transform.position;
