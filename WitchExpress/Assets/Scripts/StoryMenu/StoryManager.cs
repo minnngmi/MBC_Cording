@@ -7,22 +7,33 @@ using UnityEngine.UI;
 
 public class StoryManager : MonoBehaviour
 {
+
+    [Header("이미지 관련")]
     // 스토리 이미지들을 담을 배열
     public Sprite[] storyImages;
 
-    // 스토리를 보여줄 이미지 컴포넌트
+    // 스토리를 보여줄 현재 이미지 컴포넌트
     public Image storyImgHolder;
-    // 페이드 효과를 위한 새로운 이미지 컴포넌트 추가
+
+    // 페이드 효과를 위한  다음 장 이미지  컴포넌트 추가
     public Image nextImgHolder;
 
     // 현재 이미지 인덱스
     private int currentImgIndex = 0;
 
+    [Header("음악 관련")]
+    public AudioSource storyBGM01;
+    public AudioSource storyBGM02;
+
+
     void Start()
     {
+        // 첫번째 음악 재생 
+        storyBGM01.Play();
+
         if (storyImages.Length > 0)
         {
-            // 다음 이미지 홀더 비활성화
+            //  다음 장 이미지 비활성화
             nextImgHolder.gameObject.SetActive(false);
             // 첫 번째 이미지 
             storyImgHolder.sprite = storyImages[currentImgIndex];
@@ -30,10 +41,11 @@ public class StoryManager : MonoBehaviour
     }
     void Update()
     {
-        // 마우스 왼쪽 버튼 클릭 또는 스페이스바 입력 감지
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        // 스페이스바 입력 감지
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             currentImgIndex++;
+
             // 다음 장면으로
             NextImage();
         }
@@ -42,7 +54,7 @@ public class StoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             StopAllCoroutines();
-            // 게임 시작
+            // 게임 즉시 시작
             StartCoroutine(Loading());
         }
 
@@ -55,9 +67,16 @@ public class StoryManager : MonoBehaviour
         }
     }
 
-    // 다음 이미지 전환 메서드 (페이드 효과 추가)
+    // 다음 이미지 전환 메서드
     void NextImage()
     {
+        // 인덱스 넘버 12장 때 음악 체인지
+        if (currentImgIndex == 13)
+        {
+            storyBGM01.Stop();
+            storyBGM02.Play();
+        }
+
         // 페이드 효과 코루틴 실행
         StartCoroutine(FadeToNextImage());
     }
@@ -71,6 +90,7 @@ public class StoryManager : MonoBehaviour
         // 다음 이미지가 존재하면
         if (currentImgIndex < storyImages.Length)
         {
+
             nextImgHolder.sprite = storyImages[currentImgIndex];
 
             float timer = 0f;

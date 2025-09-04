@@ -184,7 +184,6 @@ public class GameManager : MonoBehaviour
     {
         if (candyCount < PosionCandy)
         {
-            Debug.Log("캔디 수가 부족합니다.");
             return;
         }
         else

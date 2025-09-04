@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BGMManager : MonoBehaviour
+public class MenuBGMManager : MonoBehaviour
 {
     // 싱글톤 인스턴스
-    public static BGMManager instance;
+    public static MenuBGMManager instance;
 
     // 현재 씬의 이름을 저장할 변수
     private string currentSceneName;
