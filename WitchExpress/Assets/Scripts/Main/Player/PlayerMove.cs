@@ -10,6 +10,9 @@ public class PlayerMove : MonoBehaviour
     public float openingTime;
     public float bossOpeningTime;
 
+    // 오프닝 텍스트
+    public GameObject opTxt;
+
     [Header("이동 속도")]
     public float speed;
 
@@ -26,12 +29,15 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody rb;
 
+
     private void Start()
     {
+        opTxt.SetActive(false);
         rb = GetComponent<Rigidbody>();
 
         // 게임 시작 시 오프닝 시퀀스를 담당하는 코루틴을 시작
         StartCoroutine(OpeningSequence());
+        StartCoroutine(OpeningText());
     }
 
     private void Update()
@@ -39,7 +45,7 @@ public class PlayerMove : MonoBehaviour
         // 게임 상태가 ‘게임 중’ 상태일 때만 조작할 수 있게 한다.
         if (GameManager.Instance.gState != GameManager.GameState.Run)
         {
-            return;
+                return;
         }
 
         // 이동키
@@ -98,8 +104,15 @@ public class PlayerMove : MonoBehaviour
         // 오프닝이 끝났으므로 GameManager의 상태를 '게임 중'으로 변경합니다.
         GameManager.Instance.gState = GameManager.GameState.Run;
 
+        
 
     }
+    private IEnumerator OpeningText()
+    {
+        yield return new WaitForSeconds(2f);
+        opTxt.SetActive(true);
+    }
+
 
     // 보스 등장 시퀀스를 처리하는 코루틴
     public IEnumerator BossOpening()
