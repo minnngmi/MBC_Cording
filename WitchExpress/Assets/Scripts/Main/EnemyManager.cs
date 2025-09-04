@@ -128,7 +128,7 @@ public class EnemyManager : MonoBehaviour
         // 시간 타이머
         float patternChangeTimer = 0f;
         // 현재 인덱스에 해당하는 적을 계속 스폰
-        while (patternChangeTimer < stageTime)
+        while (patternChangeTimer < stageTime+5)
         {
             // 랜덤한 시간만큼 기다린 후 적을 스폰합니다
             float spawnInterval = Random.Range(minTime, maxTime);
@@ -165,7 +165,8 @@ public class EnemyManager : MonoBehaviour
     {
         playerMove = FindObjectOfType<PlayerMove>();
         // 보스 등장 대기 시간
-        yield return new WaitForSeconds(stageDelayTime);
+        yield return new WaitForSeconds(stageDelayTime-10);
+
         // 플레이어 캐릭터를 이동시키는 코루틴이 끝날 때까지 기다립니다.
         yield return StartCoroutine(playerMove.BossOpening());
 
