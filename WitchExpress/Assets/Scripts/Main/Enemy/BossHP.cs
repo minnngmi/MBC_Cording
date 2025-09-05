@@ -181,8 +181,5 @@ public class BossHP : MonoBehaviour
         {
             yield return playerMove.StartCoroutine(playerMove.GoEnding());
         }
-
-        // 보스 오브젝트 파괴 후 "Ending" 씬 로드
-        SceneManager.LoadScene("Ending");
     }
 }

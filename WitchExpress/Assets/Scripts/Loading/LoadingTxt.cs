@@ -8,6 +8,7 @@ public class LoadingTxt : MonoBehaviour
 {
     //  Text 컴포넌트
     public Text loadingText;
+    public float minWaitTime;
 
     private void OnEnable()
     {
@@ -27,7 +28,6 @@ public class LoadingTxt : MonoBehaviour
         int dotIndex = 0;
 
         float elapsedTime = 0f;
-        float minWaitTime = 0.03f; // 최소 대기 시간 (10초)
         loadingText.color = Color.gray;
 
         while (elapsedTime < minWaitTime)

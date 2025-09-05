@@ -193,9 +193,11 @@ public class PlayerMove : MonoBehaviour
         // 최종 위치를 목표 위치로 설정
         transform.position = endPos;
 
+        // 보스 오브젝트 파괴 후 "Ending" 씬 로드
+        SceneManager.LoadScene("Ending");
+
         // 엔딩 시퀀스 완료 후 게임 상태 변경
-        GameManager.Instance.gState = GameManager.GameState.Ending;
-     
+        GameManager.Instance.gState = GameManager.GameState.Run;
     }
 }
 
