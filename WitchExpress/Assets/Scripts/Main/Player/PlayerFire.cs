@@ -149,7 +149,7 @@ public class PlayerFire : MonoBehaviour
     }
 
     // 특수 스킬 발동 코루틴
-    private IEnumerator SkillSequence()
+    public IEnumerator SkillSequence()
     {
         // GameManager에 스킬이 시작되었음을 알립니다.
         if (GameManager.Instance != null)

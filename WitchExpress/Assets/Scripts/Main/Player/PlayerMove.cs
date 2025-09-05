@@ -28,6 +28,8 @@ public class PlayerMove : MonoBehaviour
     private float tiltAmountForward = 30f; // 앞뒤 기울임
 
     private Rigidbody rb;
+  
+
 
 
     private void Start()
@@ -119,8 +121,8 @@ public class PlayerMove : MonoBehaviour
     {
         Debug.Log($"보스 오프닝 진행중!");
         GameManager.Instance.gState = GameManager.GameState.Ready;
-
-
+       
+        // 만약 특수 스킬 사용시, 코루틴 종료
         PlayerFire playerFire = GameObject.Find("Player").GetComponent<PlayerFire>();
         GameObject skillEffect = playerFire.skillEffectObject;
         skillEffect.SetActive(false);
