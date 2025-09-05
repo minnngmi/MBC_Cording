@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GameManager;
 
 public class PlayerMove : MonoBehaviour
@@ -28,8 +29,9 @@ public class PlayerMove : MonoBehaviour
     private float tiltAmountForward = 30f; // 앞뒤 기울임
 
     private Rigidbody rb;
-  
 
+    [Header("엔딩 시퀀스")]
+    public float endingMoveDuration = 3.0f;
 
 
     private void Start()
@@ -163,4 +165,38 @@ public class PlayerMove : MonoBehaviour
         rb.position = endPos;
         transform.rotation = endRot;
     }
+
+    // 엔딩씬으로 이동하는 코루틴
+    public IEnumerator GoEnding()
+    {
+        // 게임 상태를 Ready로 변경하여 조작을 막음
+        GameManager.Instance.gState = GameManager.GameState.Ready;
+
+        // 현재 위치를 시작점으로 설정
+        Vector3 startPos = transform.position;
+        // 목표 위치를 현재 x,y 값에 z만 15로 설정
+        Vector3 endPos = new Vector3(startPos.x, startPos.y, 15f);
+        float elapsedTime = 0f;
+
+        // Rigidbody의 속도를 0으로 설정하여 혹시 모를 움직임을 막음
+        rb.velocity = Vector3.zero;
+
+        // 설정된 시간 동안 부드럽게 Z축으로 이동
+        while (elapsedTime < endingMoveDuration)
+        {
+            float t = elapsedTime / endingMoveDuration;
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 최종 위치를 목표 위치로 설정
+        transform.position = endPos;
+
+        // 엔딩 시퀀스 완료 후 게임 상태 변경
+        GameManager.Instance.gState = GameManager.GameState.Ending;
+     
+    }
 }
+
+

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // UI 사용을 위해 추가
 
 
@@ -34,7 +35,7 @@ public class BossHP : MonoBehaviour
     private Animator bossAnimator;
 
     [Header("보스 애니메이션 제어")]
-    public float deathAnimationDuration = 3.0f; // 사망 애니메이션 재생 시간
+    public float deathAnimationDuration = 1.5f; // 사망 애니메이션 재생 시간
     // 보스가 죽었는지 확인하는 변수
     private bool isDead = false;
 
@@ -174,11 +175,14 @@ public class BossHP : MonoBehaviour
         Debug.Log("보스 오브젝트가 파괴됩니다.");
         Destroy(gameObject);
 
+        // PlayerMove 스크립트를 가져와서 GoEnding() 코루틴 시작
+        PlayerMove playerMove = GameObject.Find("Player").GetComponent<PlayerMove>();
+        if (playerMove != null)
+        {
+            yield return playerMove.StartCoroutine(playerMove.GoEnding());
+        }
 
-
+        // 보스 오브젝트 파괴 후 "Ending" 씬 로드
+        SceneManager.LoadScene("Ending");
     }
-
-
-    
-
 }

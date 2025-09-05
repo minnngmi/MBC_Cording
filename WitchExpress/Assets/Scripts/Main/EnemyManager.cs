@@ -196,8 +196,6 @@ public class EnemyManager : MonoBehaviour
 
         while (patternChangeTimer < bossStageTime)
         {
-
-            
             // 여기에 보스의 공격 로직을 추가
             // 예를 들어, yield return new WaitForSeconds(1.0f);
             yield return null;

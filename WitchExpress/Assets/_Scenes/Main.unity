@@ -4150,7 +4150,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742179335}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 9ce58519e90c3fb489ba2e318d839830, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: e14da83be71d1a54abf234d2fda893b5, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 963194227}
@@ -4968,7 +4968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819293349430359884, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: bossHP
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4819293349430359884, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: bossHpTxt
@@ -4976,7 +4976,7 @@ PrefabInstance:
       objectReference: {fileID: 407700521}
     - target: {fileID: 4819293349430359884, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: bossMaxHP
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4819293349430359884, guid: ae1a8637403667d4aa02b0ddf302c3de, type: 3}
       propertyPath: BossHpFill
